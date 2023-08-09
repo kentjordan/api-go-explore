@@ -1,0 +1,23 @@
+{
+  "name": "api-go-explore",
+  "version": "1.0.0",
+  "description": "An API for GO EXPLORE",
+  "main": "server.js",
+  "scripts": {
+    "start:dev": "npx nodemon ./src/server.ts"
+  },
+  "keywords": [],
+  "author": "GEM Code - Solutions",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
