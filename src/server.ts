@@ -1,12 +1,23 @@
-import 'dotenv/config'
-import express, { Request, Response } from 'express'
+import 'dotenv/config';
+import express, { json } from 'express';
+import { default as usersRouter } from './modules/users/users.router';
+import { default as placesRouter } from './modules/places/places.router';
+import { default as imagesRouter } from './modules/images/images.router';
+import { default as eventsRouter } from './modules/events/events.router';
+import { default as searchRouter } from './modules/search/search.router'
 
-const server = express()
+const server = express();
 
-server.get('/', (req: Request, res: Response) => {
-    res.status(200).json({ msg: 'Hello World' });
-})
+// Middlewares
+server.use(json());
+
+// End-points
+server.use('/search', searchRouter);
+server.use('/places', placesRouter);
+server.use('/users', usersRouter);
+server.use('/images', imagesRouter);
+server.use('/events', eventsRouter);
 
 server.listen(process.env.PORT, () => {
-    console.log('Server is listening on', process.env.PORT)
-})
+    console.log('Server is listening on', process.env.PORT);
+});
