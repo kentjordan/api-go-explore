@@ -7,6 +7,7 @@ import { default as eventsRouter } from './modules/events/events.router';
 import { default as searchRouter } from './modules/search/search.router';
 import { default as feedbacksRouter } from './modules/feedbacks/feedbacks.router';
 import { default as itinerariesRouter } from './modules/itineraries/itineraries.router';
+import { default as authRouter } from './modules/auth/auth.router';
 
 const server = express();
 
@@ -14,6 +15,7 @@ const server = express();
 server.use(json());
 
 // End-points
+server.use('/auth', authRouter);
 server.use('/itineraries', itinerariesRouter);
 server.use('/feedbacks', feedbacksRouter);
 server.use('/search', searchRouter);
