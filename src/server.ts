@@ -24,6 +24,6 @@ server.use('/users', usersRouter);
 server.use('/images', imagesRouter);
 server.use('/events', eventsRouter);
 
-server.listen(process.env.PORT, () => {
-    console.log('Server is listening on', process.env.PORT);
+server.listen(process.env.API_PORT, () => {
+    console.log('Server is listening on', process.env.API_PORT);
 });
