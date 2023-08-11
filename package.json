@@ -6,9 +6,10 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p ./tsconfig.json && npx tsc-alias -p ./tsconfig.json",
-    "prisma:init": "rm -rf ./prisma && npx prisma init && npx prisma db pull",
-    "start:dev": "npm run prisma:init && npm run build && node ./dist/server.js",
-    "start:prod": "npm run prisma:init && npm run build && npx pm2 start ./dist/server.js -i 0",
+    "prisma:clean": "rm -rf ./prisma",
+    "prisma:setup": "npm run prisma:clean && npx prisma init && npx prisma db pull && npx prisma generate",
+    "start:dev": "npm run prisma:setup && npm run build && node ./dist/server.js",
+    "start:prod": "npm run prisma:setup && npm run build && npx pm2 start ./dist/server.js -i 0",
     "stop:prod": "npx pm2 stop all"
   },
   "keywords": [],
