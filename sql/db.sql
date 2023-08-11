@@ -2,6 +2,12 @@
 CREATE USER goexplore WITH LOGIN SUPERUSER;
 ALTER USER goexplore WITH PASSWORD '@goexplore++';
 
+-- Drop any tables if exists
+DROP TABLE IF EXISTS "VisitedPlace";
+DROP TABLE IF EXISTS "Place";
+DROP TABLE IF EXISTS "User";
+DROP TYPE IF EXISTS role;
+
 -- Custom types
 CREATE TYPE ROLE as ENUM ('ADMIN', 'REGULAR');
 
@@ -12,12 +18,13 @@ CREATE TABLE "User"(
     updated_at TIMESTAMP,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    email TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     role ROLE DEFAULT 'REGULAR',
     from_country TEXT NOT NULL,
-    current_barangay TEXT NOT NULL,
-    current_city TEXT NOT NULL
+    current_province TEXT NOT NULL,
+    current_city TEXT NOT NULL,
+    current_barangay TEXT NOT NULL
 );
 
 CREATE TABLE "Place"(
