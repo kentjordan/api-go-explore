@@ -9,6 +9,7 @@ import { default as searchRouter } from '~/modules/search/search.router';
 import { default as feedbacksRouter } from '~/modules/feedbacks/feedbacks.router';
 import { default as itinerariesRouter } from '~/modules/itineraries/itineraries.router';
 import { default as authRouter } from '~/modules/auth/auth.router';
+import error from '~/middlewares/error';
 
 const server = express();
 
@@ -24,6 +25,8 @@ server.use('/places', placesRouter);
 server.use('/users', usersRouter);
 server.use('/images', imagesRouter);
 server.use('/events', eventsRouter);
+
+server.use(error);
 
 server.listen(process.env.API_PORT, () => {
     console.log('Server is listening on', process.env.API_PORT);
