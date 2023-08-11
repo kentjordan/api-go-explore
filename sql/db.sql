@@ -31,7 +31,7 @@ CREATE TABLE "Place"(
 );
 
 CREATE TABLE "VisitedPlace"(
-    id UUID DEFAULT gen_random_uuid(),
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     user_id UUID,
