@@ -1,6 +1,8 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextFunction, Request, Response } from "express";
 import { PrismaError } from "prisma-error-enum";
+import { ZodError } from "zod";
+import { fromZodError } from "zod-validation-error";
 
 export default function error(err: unknown, req: Request, res: Response, next: NextFunction) {
 
@@ -24,6 +26,12 @@ export default function error(err: unknown, req: Request, res: Response, next: N
             return;
         }
 
+    }
+
+    if (err instanceof ZodError) {
+        const zodError = fromZodError(err);
+        res.status(422).json(zodError);
+        return;
     }
 
     res.status(500).json({ message: 'Internal server error.' });
