@@ -1,5 +1,5 @@
-import '~/global';
 import 'dotenv/config';
+import '~/global';
 import express, { json } from 'express';
 import { default as usersRouter } from '~/modules/users/users.router';
 import { default as placesRouter } from '~/modules/places/places.router';
@@ -10,11 +10,20 @@ import { default as feedbacksRouter } from '~/modules/feedbacks/feedbacks.router
 import { default as itinerariesRouter } from '~/modules/itineraries/itineraries.router';
 import { default as authRouter } from '~/modules/auth/auth.router';
 import error from '~/middlewares/error';
+import { jwtSetup } from './middlewares/auth/jwtAuth';
+import cors from 'cors';
 
 const server = express();
 
 // Middlewares
+// TODO: Setup Cross-origin resource sharing
+server.use(cors({
+    origin: [global.frontend.url],
+    credentials: true
+}));
+
 server.use(json());
+server.use(jwtSetup.initialize());
 
 // End-points
 server.use('/auth', authRouter);
