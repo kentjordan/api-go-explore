@@ -1,12 +1,31 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import ImagesService from "./images.service";
+import uploadImage from "~/middlewares/files/multer";
+import { jwtAuth } from '~/middlewares/auth/jwtAuth'
+import { validateParams } from "~/middlewares/validators/users.val";
+import { IImageID } from "~/@types/images";
+import * as ImageValidator from '~/validators/images';
 
 const router = Router()
 const service = new ImagesService();
 
-router.get('/', (req: Request, res: Response) => {
-    res.status(200).json({ msg: '/images' })
+router.post('/',
+    jwtAuth,
+    uploadImage.single('photo'),
+    service.uploadImage
+);
 
-});
+router.put('/:id',
+    jwtAuth,
+    validateParams<IImageID>(ImageValidator.imageId),
+    uploadImage.single('photo'),
+    service.updateImageById
+);
+
+router.delete('/:id',
+    jwtAuth,
+    validateParams<IImageID>(ImageValidator.imageId),
+    service.removeImage
+);
 
 export default router;
