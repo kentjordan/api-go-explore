@@ -1,6 +1,6 @@
 import { Router } from "express";
 import UsersService from "./users.service";
-import { validateBody, validateParams } from "~/middlewares/validators/users.val";
+import { validateBody, validateParams } from "~/middlewares/validators/request.val";
 import * as UserValidator from '~/validators/users';
 import { IUserCreateInput, IUserID, IUserUpdateInput } from '~/@types/users';
 

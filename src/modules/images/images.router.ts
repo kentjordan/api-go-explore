@@ -2,7 +2,7 @@ import { Router } from "express";
 import ImagesService from "./images.service";
 import uploadImage from "~/middlewares/files/multer";
 import { jwtAuth } from '~/middlewares/auth/jwtAuth'
-import { validateParams } from "~/middlewares/validators/users.val";
+import { validateParams } from "~/middlewares/validators/request.val";
 import { IImageID } from "~/@types/images";
 import * as ImageValidator from '~/validators/images';
 
