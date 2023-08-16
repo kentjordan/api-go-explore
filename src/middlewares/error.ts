@@ -4,8 +4,14 @@ import { MulterError } from "multer";
 import { PrismaError } from "prisma-error-enum";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import InvalidPasswordError from "~/errors/InvalidPasswordError";
 
 export default function error(err: unknown, req: Request, res: Response, next: NextFunction) {
+
+    if (err instanceof InvalidPasswordError) {
+        res.status(err.code).json({ message: 'Invalid password.' });
+        return;
+    }
 
     if (err instanceof PrismaClientKnownRequestError) {
 
@@ -17,13 +23,13 @@ export default function error(err: unknown, req: Request, res: Response, next: N
 
         // DELETE, GET: User ID
         if (err.code === PrismaError.InconsistentColumnData) {
-            res.status(422).json({ message: 'Invalid given user id.' });
+            res.status(422).json({ message: 'Invalid given resource.' });
             return;
         }
 
         // DELETE, GET with User ID
         if (err.code === PrismaError.RecordsNotFound) {
-            res.status(404).json({ message: 'Given user id was not found.' });
+            res.status(404).json({ message: 'Given resource was not found.' });
             return;
         }
 
