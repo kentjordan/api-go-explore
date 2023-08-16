@@ -2,6 +2,9 @@
 CREATE USER goexplore WITH LOGIN SUPERUSER;
 ALTER USER goexplore WITH PASSWORD '@goexplore++';
 
+-- Create Database
+CREATE DATABASE "GoExplore";
+
 -- Drop any tables if exists
 DROP TABLE IF EXISTS "VisitedPlace";
 DROP TABLE IF EXISTS "Place";
@@ -14,7 +17,7 @@ CREATE TYPE ROLE as ENUM ('ADMIN', 'REGULAR');
 -- Create database schema
 CREATE TABLE "User"(
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
@@ -29,7 +32,7 @@ CREATE TABLE "User"(
 
 CREATE TABLE "Place"(
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP,
     category TEXT,
     title TEXT,
@@ -39,7 +42,7 @@ CREATE TABLE "Place"(
 
 CREATE TABLE "VisitedPlace"(
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP,
     user_id UUID,
     place_id UUID,
