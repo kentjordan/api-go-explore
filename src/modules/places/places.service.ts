@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import { IPlaceCreateInput } from '~/@types/places'
-import { ReqBody } from '~/utils/request.util'
+import { IPlaceCreateInput, IPlaceID, IPlaceUpdateInput } from '~/@types/places'
+import { ReqBody, ReqParams } from '~/utils/request.util'
 import * as PlaceModels from '~/models/places';
+import { IRequestCustomParams } from '~/@types/request';
 
 export default class PlacesService {
 
@@ -17,20 +18,51 @@ export default class PlacesService {
 
     }
 
-    async getPlaceById(req: Request, res: Response, next: NextFunction) {
+    async getPlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
+
+        const { id } = ReqParams<IPlaceID>(req);
+
+        const place = await PlaceModels.getPlaceById(id, next);
+
+        if (place) {
+            res.status(200).json({ ...place });
+        }
 
     }
 
-    // Provide a query for pagination
+    // TODO: Provide a query for pagination
     async getPlaces(req: Request, res: Response, next: NextFunction) {
 
+        const places = await PlaceModels.getPlaces(next);
+
+        if (places) {
+            res.status(200).json([...places]);
+        }
+
     }
 
-    async updatePlaceById(req: Request, res: Response, next: NextFunction) {
+    async updatePlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
+
+        const { id } = ReqParams<IPlaceID>(req);
+        const updateIput = ReqBody<IPlaceUpdateInput>(req);
+
+        const updatedPlace = await PlaceModels.updatePlaceById(id, updateIput, next);
+
+        if (updatedPlace) {
+            res.status(201).json({ ...updatedPlace });
+        }
 
     }
 
-    async deletePlaceById(req: Request, res: Response, next: NextFunction) {
+    async deletePlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
+
+        const { id } = ReqParams<IPlaceID>(req);
+
+        const deletedPlace = await PlaceModels.deletePlaceById(id, next);
+
+        if (deletedPlace) {
+            res.status(200).json({ ...deletedPlace });
+        }
 
     }
 
