@@ -37,7 +37,11 @@ CREATE TABLE "Place"(
     category TEXT,
     title TEXT,
     description TEXT,
-    photos TEXT[]
+    photos TEXT[],
+    contact VARCHAR(16),
+    province TEXT,
+    city TEXT,
+    barangay TEXT
 );
 
 CREATE TABLE "VisitedPlace"(
