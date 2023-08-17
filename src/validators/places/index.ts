@@ -15,7 +15,19 @@ const createPlace = z.object({
     barangay: z.string()
 });
 
+const updatePlace = z.object({
+    category: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    description: z.string().min(1).optional(),
+    photos: z.array(z.string().min(1)).optional(),
+    contact: z.string().min(1).optional(),
+    province: z.string().min(1).optional(),
+    city: z.string().min(1).optional(),
+    barangay: z.string().min(1).optional(),
+});
+
 export {
     placeId,
-    createPlace
+    createPlace,
+    updatePlace
 }

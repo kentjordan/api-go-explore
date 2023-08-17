@@ -1,8 +1,8 @@
 import { Router } from "express";
 import PlacesService from "./places.service";
 import { jwtAuth } from "~/middlewares/auth/jwtAuth";
-import { validateBody } from "~/middlewares/validators/request.val";
-import { IPlaceCreateInput } from "~/@types/places";
+import { validateBody, validateParams } from "~/middlewares/validators/request.val";
+import { IPlaceCreateInput, IPlaceID, IPlaceUpdateInput } from "~/@types/places";
 import * as PlaceValidator from '~/validators/places';
 
 
@@ -20,13 +20,22 @@ router.get('/',
     service.getPlaces
 );
 
+router.get('/:id',
+    jwtAuth,
+    validateParams<IPlaceID>(PlaceValidator.placeId),
+    service.getPlaceById
+);
+
 router.put('/:id',
     jwtAuth,
+    validateParams<IPlaceID>(PlaceValidator.placeId),
+    validateBody<IPlaceUpdateInput>(PlaceValidator.updatePlace),
     service.updatePlaceById
 );
 
 router.delete('/:id',
     jwtAuth,
+    validateParams<IPlaceID>(PlaceValidator.placeId),
     service.deletePlaceById
 );
 

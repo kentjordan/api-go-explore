@@ -1,8 +1,12 @@
 import { z } from 'zod';
-import { createPlace } from "~/validators/places";
+import { createPlace, placeId, updatePlace } from "~/validators/places";
 
+type IPlaceID = z.infer<typeof placeId>;
 type IPlaceCreateInput = z.infer<typeof createPlace>;
+type IPlaceUpdateInput = z.infer<typeof updatePlace>;
 
 export {
-    IPlaceCreateInput
+    IPlaceID,
+    IPlaceCreateInput,
+    IPlaceUpdateInput
 }
