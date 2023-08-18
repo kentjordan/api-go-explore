@@ -53,3 +53,16 @@ CREATE TABLE "VisitedPlace"(
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
     CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
 );
+
+CREATE TABLE "Event"(
+	id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP,
+	title TEXT,
+	description TEXT,
+	date TIMESTAMP,
+	image TEXT[],
+	city TEXT,
+	province TEXT,
+	barangay TEXT
+);
