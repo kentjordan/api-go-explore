@@ -16,7 +16,6 @@ router.post('/',
 );
 
 router.get('/',
-    jwtAuth,
     service.getPlaces
 );
 
