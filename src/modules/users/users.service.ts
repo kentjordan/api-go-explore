@@ -51,10 +51,14 @@ export default class UsersService {
         const { id } = ReqParams<IUserID>(req);
         const updateInput = ReqBody<IUserUpdateInput>(req);
 
-        const updatedUser = await UserModels.updateUser(id, updateInput, next);
+        const user = await UserModels.updateUser(id, updateInput, next);
 
-        if (updatedUser?.isUpdated) {
-            res.status(201).json({ message: 'User updated successfully.' });
+        if (user) {
+            res.status(201).json({
+                ...user,
+                message: 'User updated successfully.',
+                type: 'UPDATE'
+            });
         }
 
     }
@@ -63,10 +67,14 @@ export default class UsersService {
 
         const { id } = ReqParams<IUserID>(req);
 
-        const deletedUser = await UserModels.deleteUserById(id, next);
+        const user = await UserModels.deleteUserById(id, next);
 
-        if (deletedUser?.isDeleted) {
-            res.status(200).json({ message: 'User deleted successfully.' });
+        if (user) {
+            res.status(200).json({
+                ...user,
+                message: 'User deleted successfully.',
+                type: 'DELETE'
+            });
             return;
         }
     }

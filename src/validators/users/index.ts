@@ -25,7 +25,7 @@ const updateUser = z.object({
     from_country: z.string().min(1).optional(),
     current_province: z.string().min(1).optional(),
     current_city: z.string().min(1).optional(),
-    current_barangay: z.string().min(1)
+    current_barangay: z.string().min(1).optional()
 });
 
 export {

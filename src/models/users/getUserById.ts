@@ -3,7 +3,7 @@ import { NextFunction } from "express";
 async function getUserById(id: string, next: NextFunction) {
 
     try {
-        const user = await prismaClient.user.findFirstOrThrow({
+        return await prismaClient.user.findFirstOrThrow({
             select: {
                 id: true,
                 first_name: true,
@@ -17,7 +17,6 @@ async function getUserById(id: string, next: NextFunction) {
             },
             where: { id }
         });
-        return user;
     } catch (error: unknown) {
         next(error);
     }
