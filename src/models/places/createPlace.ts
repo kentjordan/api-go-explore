@@ -5,7 +5,7 @@ async function createPlace(data: IPlaceCreateInput, next: NextFunction) {
 
     try {
 
-        const db_res = await prismaClient.place.create({
+        const place = await prismaClient.place.create({
             select: { id: true },
             data: {
                 ...data,
@@ -14,8 +14,8 @@ async function createPlace(data: IPlaceCreateInput, next: NextFunction) {
         });
 
         return {
-            ...db_res,
-            isPlaceCreated: true
+            ...place,
+            type: "CREATE"
         }
 
     } catch (error: unknown) {

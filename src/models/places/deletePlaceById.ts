@@ -3,13 +3,14 @@ import { NextFunction } from "express";
 async function deletePlaceById(id: string, next: NextFunction) {
 
     try {
-        const deletedPlace = await prismaClient.place.delete({
+        const place = await prismaClient.place.delete({
+            select: { id: true },
             where: { id },
         });
 
         return {
-            ...deletedPlace,
-            isDeleted: true,
+            ...place,
+            type: 'DELETE',
         }
 
     } catch (error: unknown) {

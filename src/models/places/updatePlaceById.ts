@@ -5,14 +5,18 @@ async function updatePlaceById(id: string, data: IPlaceUpdateInput, next: NextFu
 
     try {
 
-        const updatedPlaceId = await prismaClient.place.update({
+        const place = await prismaClient.place.update({
             select: { id: true },
             where: { id },
-            data
+            data: {
+                ...data,
+                updated_at: new Date().toISOString()
+            }
         });
 
         return {
-            updatedPlaceId
+            ...place,
+            type: 'UPDATE',
         }
 
     } catch (error: unknown) {
