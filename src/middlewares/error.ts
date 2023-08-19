@@ -9,27 +9,49 @@ import InvalidPasswordError from "~/errors/InvalidPasswordError";
 export default function error(err: unknown, req: Request, res: Response, next: NextFunction) {
 
     if (err instanceof InvalidPasswordError) {
-        res.status(err.code).json({ message: 'Invalid password.' });
+        res.status(err.code).json({
+            message: 'Invalid password.',
+            db_err_type: 'Not Matched',
+            type: 'Database Error',
+        });
         return;
     }
 
     if (err instanceof PrismaClientKnownRequestError) {
 
-        // POST: User email
         if (err.code === PrismaError.UniqueConstraintViolation) {
-            res.status(422).json({ message: 'Given email is not available.' });
+            res.status(422).json({
+                message: 'Given resource is not available.',
+                db_err_type: 'Unique Constraint Violation',
+                type: 'Database Error',
+            });
             return;
         }
 
-        // DELETE, GET: User ID
         if (err.code === PrismaError.InconsistentColumnData) {
-            res.status(422).json({ message: 'Invalid given resource.' });
+            res.status(422).json({
+                message: 'Invalid given resource.',
+                db_err_type: 'Inconsistent Column Data',
+                type: 'Database Error',
+            });
             return;
         }
 
-        // DELETE, GET with User ID
         if (err.code === PrismaError.RecordsNotFound) {
-            res.status(404).json({ message: 'Given resource was not found.' });
+            res.status(404).json({
+                message: 'Given resource was not found.',
+                db_err_type: 'Records Not Found',
+                type: 'Database Error',
+            });
+            return;
+        }
+
+        if (err.code === PrismaError.ForeignConstraintViolation) {
+            res.status(404).json({
+                message: 'No records found on all tables for the given resource.',
+                db_err_type: 'Foreign Constraint Violation',
+                type: 'Database Error',
+            });
             return;
         }
 

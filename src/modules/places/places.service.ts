@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { IPlaceCreateInput, IPlaceID, IPlaceUpdateInput } from '~/@types/places'
-import { ReqBody, ReqParams } from '~/utils/request.util'
+import { ExtractReqBody, ExtractReqParams } from '~/utils/request.util'
 import * as PlaceModels from '~/models/places';
 import { IRequestCustomParams } from '~/@types/request';
 
@@ -8,7 +8,7 @@ export default class PlacesService {
 
     async createPlace(req: Request, res: Response, next: NextFunction) {
 
-        const placeInfo = ReqBody<IPlaceCreateInput>(req);
+        const placeInfo = ExtractReqBody<IPlaceCreateInput>(req);
 
         const place = await PlaceModels.createPlace(placeInfo, next);
 
@@ -20,7 +20,7 @@ export default class PlacesService {
 
     async getPlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IPlaceID>(req);
+        const { id } = ExtractReqParams<IPlaceID>(req);
 
         const place = await PlaceModels.getPlaceById(id, next);
 
@@ -43,8 +43,8 @@ export default class PlacesService {
 
     async updatePlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IPlaceID>(req);
-        const updateIput = ReqBody<IPlaceUpdateInput>(req);
+        const { id } = ExtractReqParams<IPlaceID>(req);
+        const updateIput = ExtractReqBody<IPlaceUpdateInput>(req);
 
         const updatedPlace = await PlaceModels.updatePlaceById(id, updateIput, next);
 
@@ -56,7 +56,7 @@ export default class PlacesService {
 
     async deletePlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IPlaceID>(req);
+        const { id } = ExtractReqParams<IPlaceID>(req);
 
         const deletedPlace = await PlaceModels.deletePlaceById(id, next);
 

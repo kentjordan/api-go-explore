@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { IEventCreateInput, IEventID, IEventUpdateInput } from "~/@types/events";
-import { ReqBody, ReqParams } from "~/utils/request.util";
+import { ExtractReqBody, ExtractReqParams } from "~/utils/request.util";
 import * as EventsModels from "~/models/events";
 import { IRequestCustomBody, IRequestCustomParams } from "~/@types/request";
 
@@ -8,7 +8,7 @@ export default class EventsService {
 
     async createEvent(req: IRequestCustomBody<IEventCreateInput>, res: Response, next: NextFunction) {
 
-        const eventInfo = ReqBody<IEventCreateInput>(req);
+        const eventInfo = ExtractReqBody<IEventCreateInput>(req);
 
         const event = await EventsModels.createEvent(eventInfo, next);
 
@@ -32,7 +32,7 @@ export default class EventsService {
 
     async getEventById(req: IRequestCustomParams<IEventID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IEventID>(req);
+        const { id } = ExtractReqParams<IEventID>(req);
 
         const event = await EventsModels.getEventById(id, next);
 
@@ -43,8 +43,8 @@ export default class EventsService {
 
     async updateEventById(req: IRequestCustomParams<IEventID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IEventID>(req);
-        const data = ReqBody<IEventUpdateInput>(req);
+        const { id } = ExtractReqParams<IEventID>(req);
+        const data = ExtractReqBody<IEventUpdateInput>(req);
 
         const event = await EventsModels.updateEventById(data, id, next);
 
@@ -72,7 +72,7 @@ export default class EventsService {
 
     async deleteEventById(req: IRequestCustomParams<IEventID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IEventID>(req);
+        const { id } = ExtractReqParams<IEventID>(req);
 
         const event = await EventsModels.deleteEventById(id, next);
 

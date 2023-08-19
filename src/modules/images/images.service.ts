@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import fs from 'node:fs';
 import { IImageID } from "~/@types/images";
 import { IRequestCustomParams } from "~/@types/request";
-import { ReqParams } from "~/utils/request.util";
+import { ExtractReqParams } from "~/utils/request.util";
 
 export default class ImagesService {
 
@@ -19,7 +19,7 @@ export default class ImagesService {
 
     async updateImageById(req: IRequestCustomParams<IImageID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IImageID>(req);
+        const { id } = ExtractReqParams<IImageID>(req);
         const updatedImage = req.file?.filename;
 
         if (!updatedImage) {
@@ -58,7 +58,7 @@ export default class ImagesService {
 
     async removeImage(req: IRequestCustomParams<IImageID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IImageID>(req);
+        const { id } = ExtractReqParams<IImageID>(req);
 
         fs.unlink(`${uploadedFilesPath.images}/${id}`, (err) => {
             if (err?.code === 'ENOENT') {

@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { IUserCreateInput, IUserID, IUserUpdateInput } from "~/@types/users";
 import * as UserModels from "~/models/users";
-import { ReqBody, ReqParams } from "~/utils/request.util";
+import { ExtractReqBody, ExtractReqParams } from "~/utils/request.util";
 import { IRequestCustomBody, IRequestCustomParams, IRequestCustomQuery } from "~/@types/request";
 
 export default class UsersService {
 
     async createUser(req: Request, res: Response, next: NextFunction) {
 
-        const userCredentials = ReqBody<IUserCreateInput>(req);
+        const userCredentials = ExtractReqBody<IUserCreateInput>(req);
 
         const user = await UserModels.createUser(userCredentials, next);
 
@@ -26,7 +26,7 @@ export default class UsersService {
 
     async getUserById(req: IRequestCustomParams<IUserID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IUserID>(req);
+        const { id } = ExtractReqParams<IUserID>(req);
 
         const user = await UserModels.getUserById(id, next);
 
@@ -48,8 +48,8 @@ export default class UsersService {
 
     async updateUser(req: IRequestCustomBody<IUserUpdateInput>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IUserID>(req);
-        const updateInput = ReqBody<IUserUpdateInput>(req);
+        const { id } = ExtractReqParams<IUserID>(req);
+        const updateInput = ExtractReqBody<IUserUpdateInput>(req);
 
         const user = await UserModels.updateUser(id, updateInput, next);
 
@@ -65,7 +65,7 @@ export default class UsersService {
 
     async deleteUser(req: IRequestCustomQuery<IUserID>, res: Response, next: NextFunction) {
 
-        const { id } = ReqParams<IUserID>(req);
+        const { id } = ExtractReqParams<IUserID>(req);
 
         const user = await UserModels.deleteUserById(id, next);
 
