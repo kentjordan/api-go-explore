@@ -61,8 +61,18 @@ CREATE TABLE "Event"(
 	title TEXT,
 	description TEXT,
 	date TIMESTAMP,
-	image TEXT[],
+	images TEXT[],
 	city TEXT,
 	province TEXT,
 	barangay TEXT
+);
+
+CREATE TABLE "Itinerary"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    place_id UUID,
+    user_id UUID,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
+    CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
 );
