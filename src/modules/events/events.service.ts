@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { IEventCreateInput } from "~/@types/events";
-import { ReqBody } from "~/utils/request.util";
+import { IEventCreateInput, IEventID, IEventUpdateInput } from "~/@types/events";
+import { ReqBody, ReqParams } from "~/utils/request.util";
 import * as EventsModels from "~/models/events";
-import { IRequestCustomBody } from "~/@types/request";
+import { IRequestCustomBody, IRequestCustomParams } from "~/@types/request";
 
 export default class EventsService {
 
@@ -15,14 +15,14 @@ export default class EventsService {
         if (event) {
             res.status(201).json({
                 ...event,
-                message: "Event successfully created.",
+                message: "Event has been successfully created.",
                 type: "CREATE"
             });
         }
-
     }
 
     async getEvents(req: Request, res: Response, next: NextFunction) {
+
         const events = await EventsModels.getEvents(next);
 
         if (events) {
@@ -30,16 +30,59 @@ export default class EventsService {
         }
     }
 
-    async getEventById(req: Request, res: Response, next: NextFunction) {
+    async getEventById(req: IRequestCustomParams<IEventID>, res: Response, next: NextFunction) {
+
+        const { id } = ReqParams<IEventID>(req);
+
+        const event = await EventsModels.getEventById(id, next);
+
+        if (event) {
+            res.status(200).json({ ...event });
+        }
+    }
+
+    async updateEventById(req: IRequestCustomParams<IEventID>, res: Response, next: NextFunction) {
+
+        const { id } = ReqParams<IEventID>(req);
+        const data = ReqBody<IEventUpdateInput>(req);
+
+        const event = await EventsModels.updateEventById(data, id, next);
+
+        if (event) {
+            res.status(201).json({
+                ...event,
+                message: 'Event has been successfully updated.',
+                type: 'UPDATE'
+            });
+        }
+    }
+
+    async deleteEvents(req: Request, res: Response, next: NextFunction) {
+
+        const deletedEvents = await EventsModels.deleteEvents(next);
+
+        if (deletedEvents) {
+            res.status(200).json({
+                message: `Total of (${deletedEvents.count}) events has been successfully deleted.`,
+                type: 'DELETE'
+            });
+        }
 
     }
 
-    async updateEventById(req: Request, res: Response, next: NextFunction) {
+    async deleteEventById(req: IRequestCustomParams<IEventID>, res: Response, next: NextFunction) {
 
-    }
+        const { id } = ReqParams<IEventID>(req);
 
-    async deleteEventById(req: Request, res: Response, next: NextFunction) {
+        const event = await EventsModels.deleteEventById(id, next);
 
+        if (event) {
+            res.status(200).json({
+                ...event,
+                message: 'Event has been succeessfully deleted.',
+                type: 'DELETE'
+            });
+        }
     }
 
 }

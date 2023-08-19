@@ -15,13 +15,30 @@ router.post('/',
 );
 
 router.get('/:id',
-    jwtAuth,
     validateParams<IEventID>(EventsValidator.eventId),
     service.getEventById
 );
 
 router.get('/',
     service.getEvents
+);
+
+router.put('/:id',
+    jwtAuth,
+    validateParams<IEventID>(EventsValidator.eventId),
+    validateBody<IEventCreateInput>(EventsValidator.updateEvent),
+    service.updateEventById
+);
+
+router.delete('/',
+    jwtAuth,
+    service.deleteEvents
+);
+
+router.delete('/:id',
+    jwtAuth,
+    validateParams<IEventID>(EventsValidator.eventId),
+    service.deleteEventById
 );
 
 export default router;

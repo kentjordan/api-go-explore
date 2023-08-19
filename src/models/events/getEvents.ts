@@ -6,13 +6,15 @@ async function getEvents(next: NextFunction) {
             {
                 select: {
                     id: true,
+                    created_at: true,
                     updated_at: true,
+                    date: true,
                     title: true,
                     description: true,
                     province: true,
                     city: true,
                     barangay: true,
-                    image: true
+                    images: true
                 }
             }
         );
