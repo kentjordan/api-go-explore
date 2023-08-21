@@ -7,7 +7,7 @@ const strategy = new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 }, (payload: IPayloadJWT, done: VerifiedCallback) => {
 
-    const user = { id: payload.id };
+    const user: Express.User = { id: payload.id };
 
     const epochNow = Math.ceil(Date.now() / 1000);
 

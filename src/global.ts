@@ -16,7 +16,7 @@ if (process.env.NODE_ENV.trim() === 'production') {
 
     global.frontend = {
         // Your frontend domain here
-        url: `https://hostname.com`
+        urls: [`https://hostname.com`]
     }
 
 }
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV.trim() === 'development') {
     }
 
     global.frontend = {
-        url: `*`
+        urls: [`*`]
     }
 
 }
