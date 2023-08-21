@@ -6,9 +6,13 @@ ALTER USER goexplore WITH PASSWORD '@goexplore++';
 CREATE DATABASE "GoExplore";
 
 -- Drop any tables if exists
+DROP TABLE IF EXISTS "Feedback";
+DROP TABLE IF EXISTS "Itinerary";
+DROP TABLE IF EXISTS "Event";
 DROP TABLE IF EXISTS "VisitedPlace";
 DROP TABLE IF EXISTS "Place";
 DROP TABLE IF EXISTS "User";
+
 DROP TYPE IF EXISTS role;
 
 -- Custom types
@@ -73,6 +77,18 @@ CREATE TABLE "Itinerary"(
     updated_at TIMESTAMP,
     place_id UUID,
     user_id UUID,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
+    CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
+);
+
+CREATE TABLE "Feedback"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    rating FLOAT,
+    comment TEXT,
+    user_id UUID,
+    place_id UUID,
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
     CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
 );
