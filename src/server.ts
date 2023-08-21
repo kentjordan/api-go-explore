@@ -19,7 +19,7 @@ const server = express();
 // Middlewares
 // TODO: Setup Cross-origin resource sharing
 server.use(cors({
-    origin: [global.frontend.url],
+    origin: global.frontend.urls,
     credentials: true
 }));
 

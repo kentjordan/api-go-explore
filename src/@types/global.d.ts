@@ -10,7 +10,7 @@ export declare global {
     var uploadedFilesPath: UploadedFilesPath;
     var frontend: {
         protocol?: 'http' | 'https';
-        url: string;
+        urls: Array<string>;
     }
     var api: {
         protocol?: 'http' | 'https';
