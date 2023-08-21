@@ -12,6 +12,7 @@ import { default as authRouter } from '~/modules/auth/auth.router';
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
+import helmet from 'helmet';
 
 const server = express();
 
@@ -22,6 +23,7 @@ server.use(cors({
     credentials: true
 }));
 
+server.use(helmet());
 server.use(json());
 server.use(jwtSetup.initialize());
 
