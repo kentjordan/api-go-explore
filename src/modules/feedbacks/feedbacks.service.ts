@@ -72,8 +72,24 @@ class UserFeedbackService extends FeedbackService implements IUserFeedbackServic
 
         const feedback = await FeedbackModels.createUserFeedbackById(userFeedback, id, next);
 
+        if (feedback?.isLimitExceeded) {
+
+            res.status(400).json({
+                ...feedback,
+                message: 'Can\'t create more than 1 feedback to the place.',
+                type: 'LIMIT_EXCEEDED',
+            });
+
+            return;
+
+        }
+
         if (feedback) {
-            res.status(200).json({ ...feedback });
+            res.status(200).json({
+                ...feedback,
+                message: 'Feedback has been successfully created.',
+                type: 'CREATE',
+            });
         }
 
     }
@@ -90,6 +106,14 @@ class UserFeedbackService extends FeedbackService implements IUserFeedbackServic
 
     // GET: ALL user's feedbacks by its id in JWT
     async getUserFeedbacksById(req: Request, res: Response, next: NextFunction) {
+
+        const { id } = ExtractReqUser(req);
+
+        const feedback = await FeedbackModels.getUserFeedbacksById(id, next);
+
+        if (feedback) {
+            res.status(200).json([...feedback]);
+        }
 
     }
 

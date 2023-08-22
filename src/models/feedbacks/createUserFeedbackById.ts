@@ -19,8 +19,8 @@ async function createUserFeedbackById(data: IUserFeedbackByIdCreateInput, id: st
         if (await hasAlreadyFeedback(id)) {
 
             return {
-                message: 'Can\'t create more than 1 feedback.',
-                type: 'LIMIT_EXCEEDED',
+                isLimitExceeded: true,
+                id: data.place_id
             }
 
         }
@@ -34,9 +34,7 @@ async function createUserFeedbackById(data: IUserFeedbackByIdCreateInput, id: st
         });
 
         return {
-            ...feedback,
-            message: 'Feedback has been successfully created.',
-            type: 'CREATE',
+            ...feedback
         }
 
 

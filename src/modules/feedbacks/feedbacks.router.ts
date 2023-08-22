@@ -16,9 +16,14 @@ router.post('/user',
     userFeedback.createUserFeedbackById
 );
 
-router.get('/user',
+router.get('/user/:id',
     jwtAuth,
     userFeedback.getUserFeedbackById
+);
+
+router.get('/user',
+    jwtAuth,
+    userFeedback.getUserFeedbacksById
 );
 
 router.put('/user',
