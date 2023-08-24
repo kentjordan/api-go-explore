@@ -1,9 +1,14 @@
 import createUserFeedbackById from "./createUserFeedbackById"
-import getUserFeedbackById from "./getUserFeedbackById";
+import deleteUserFeedbackById from "./deleteUserFeedbackById";
+import updateUserFeedbackById from "./updateUserFeedbackById";
+
+import getPlaceFeedbacksById from "./getPlaceFeedbacksById";
 import getUserFeedbacksById from "./getUserFeedbacksById";
 
 export {
     createUserFeedbackById,
-    getUserFeedbackById,
+    deleteUserFeedbackById,
+    updateUserFeedbackById,
+    getPlaceFeedbacksById,
     getUserFeedbacksById
 }

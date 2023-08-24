@@ -1,22 +1,25 @@
 import { NextFunction } from "express";
-import { IUserFeedbackByIdCreateInput } from "~/@types/modules/feedbacks";
+import { IUserFeedbackCreateInput } from "~/@types/modules/feedbacks";
 
-async function hasAlreadyFeedback(id: string) {
+async function hasAlreadyFeedback(place_id: string, user_id: string) {
 
     const feedbackCount = await prismaClient.feedback.count({
         select: { user_id: true },
-        where: { user_id: id }
+        where: {
+            place_id,
+            user_id,
+        }
     });
 
     return feedbackCount.user_id >= 1;
 
 }
 
-async function createUserFeedbackById(data: IUserFeedbackByIdCreateInput, id: string, next: NextFunction) {
+async function createUserFeedbackById(data: IUserFeedbackCreateInput, id: string, next: NextFunction) {
 
     try {
 
-        if (await hasAlreadyFeedback(id)) {
+        if (await hasAlreadyFeedback(data.place_id, id)) {
 
             return {
                 isLimitExceeded: true,

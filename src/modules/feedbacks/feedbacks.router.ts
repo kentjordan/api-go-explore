@@ -1,39 +1,43 @@
 import { Router } from "express";
-import { FeedbackService, PlaceFeedbackService, UserFeedbackService } from "./feedbacks.service";
+import { PlaceFeedbackService, UserFeedbackService } from "./feedbacks.service";
 import { jwtAuth } from "~/middlewares/auth/jwtAuth";
-import { validateBody } from "~/middlewares/validators/request.val";
-import { IUserFeedbackByIdCreateInput } from "~/@types/modules/feedbacks";
+import { validateBody, validateParams, validateQuery } from "~/middlewares/validators/request.val";
+import { IUserFeedbackCreateInput } from "~/@types/modules/feedbacks";
 import * as FeedbacksValidator from '~/validators/feedbacks';
+import { IFeedbackID } from "~/@types/modules/feedbacks";
+import { IPlaceID } from "~/@types/places";
+import { placeId } from '~/validators/places'
 
 const router = Router();
-const feedback = new FeedbackService();
 const userFeedback = new UserFeedbackService();
 const placeFeedback = new PlaceFeedbackService();
 
 router.post('/user',
     jwtAuth,
-    validateBody<IUserFeedbackByIdCreateInput>(FeedbacksValidator.createUserFeedbackById),
-    userFeedback.createUserFeedbackById
-);
-
-router.get('/user/:id',
-    jwtAuth,
-    userFeedback.getUserFeedbackById
-);
-
-router.get('/user',
-    jwtAuth,
-    userFeedback.getUserFeedbacksById
+    validateBody<IUserFeedbackCreateInput>(FeedbacksValidator.createUserFeedback),
+    userFeedback.createUserFeedback
 );
 
 router.put('/user',
     jwtAuth,
-    userFeedback.updateFeedbackById
+    validateBody<IFeedbackID>(FeedbacksValidator.updateUserFeedbackById),
+    userFeedback.updateUserFeedbackById
 );
 
 router.delete('/user',
     jwtAuth,
+    validateBody<IFeedbackID>(FeedbacksValidator.feedbackId),
     userFeedback.deleteUserFeedbackById
+);
+
+router.get('/place/:id',
+    validateParams<IPlaceID>(placeId),
+    placeFeedback.getPlaceFeedbacksById
+);
+
+router.get('/user/:user_id',
+    jwtAuth,
+    userFeedback.getUserFeedbacksById
 );
 
 export default router;

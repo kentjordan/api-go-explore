@@ -1,73 +1,46 @@
 import { NextFunction, Request, Response } from "express";
 
 import {
-    IFeedbackService,
-    IUserFeedbackService,
-    IPlaceFeedbackService,
-    IUserFeedbackByIdCreateInput
+    IFeedbackID,
+    IUserFeedbackUpdateInput,
+    IUserFeedbackCreateInput
 } from "~/@types/modules/feedbacks";
+
+import { IPlaceID } from "~/@types/places";
+
+import { IRequestCustomBody, IRequestCustomParams, IRequestCustomQuery } from "~/@types/request";
+import { IUserID } from "~/@types/users";
 
 import * as FeedbackModels from '~/models/feedbacks'
 
-import { ExtractReqBody, ExtractReqUser } from "~/utils/request.util";
+import { ExtractReqBody, ExtractReqParams, ExtractReqUser } from "~/utils/request.util";
 
-class FeedbackService implements IFeedbackService {
+class PlaceFeedbackService {
 
-    constructor() {
+    constructor() { }
 
-    }
+    async getPlaceFeedbacksById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction): Promise<void> {
 
-    async getFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
+        const { place_id } = ExtractReqParams<IPlaceID>(req);
 
-    }
+        const placeFeedbacks = await FeedbackModels.getPlaceFeedbacksById(place_id, next);
 
-    async updateFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-    }
-
-    async deleteFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
+        if (placeFeedbacks) {
+            res.status(200).json([...placeFeedbacks]);
+        }
 
     }
 
 }
 
-class PlaceFeedbackService extends FeedbackService implements IPlaceFeedbackService {
+class UserFeedbackService {
 
-    constructor() {
-        super();
-    }
+    constructor() { }
 
-    // GET: ALL place's feedbacks
-    async getPlaceFeedbacksById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    // ** Logged In user through JWT
+    async createUserFeedback(req: IRequestCustomQuery<IPlaceID>, res: Response, next: NextFunction): Promise<void> {
 
-    }
-
-    // GET: ONE place's feedback
-    async getPlaceFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-    }
-
-    // DELETE: ALL place's feedbacks
-    async deletePlaceFeedbacksById(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-    }
-
-    // DELETE: ONE place's feedback
-    async deletePlaceFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-    }
-
-}
-
-class UserFeedbackService extends FeedbackService implements IUserFeedbackService {
-
-    constructor() {
-        super();
-    }
-
-    async createUserFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-        const userFeedback = ExtractReqBody<IUserFeedbackByIdCreateInput>(req);
+        const userFeedback = ExtractReqBody<IUserFeedbackCreateInput>(req);
         const { id } = ExtractReqUser(req);
 
         const feedback = await FeedbackModels.createUserFeedbackById(userFeedback, id, next);
@@ -94,43 +67,65 @@ class UserFeedbackService extends FeedbackService implements IUserFeedbackServic
 
     }
 
-    // UPDATE: ONE user's feedback by its id in JWT
+    // ** Logged In user through JWT
+    // ID is from JWT
     async updateUserFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
 
-    }
+        const feedbackUpdateInput = ExtractReqBody<IUserFeedbackUpdateInput>(req);
+        const user = ExtractReqUser(req);
 
-    // GET: ONE user's feedback by its id in JWT
-    async getUserFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
+        const updatedUserFeedback = await FeedbackModels.updateUserFeedbackById(user.id, feedbackUpdateInput, next);
 
-    }
-
-    // GET: ALL user's feedbacks by its id in JWT
-    async getUserFeedbacksById(req: Request, res: Response, next: NextFunction) {
-
-        const { id } = ExtractReqUser(req);
-
-        const feedback = await FeedbackModels.getUserFeedbacksById(id, next);
-
-        if (feedback) {
-            res.status(200).json([...feedback]);
+        if (updatedUserFeedback) {
+            res.status(200).json({
+                ...updatedUserFeedback,
+                message: 'User\'s feedback has been successfully updated.',
+                type: 'UPDATE'
+            });
         }
 
     }
 
-    // DELETE: ONE user's feedback by its id in JWT
-    async deleteUserFeedbackById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    // ** Logged In user through JWT
+    // ID is from JWT
+    // Body: feedback_id
+    async deleteUserFeedbackById(req: IRequestCustomBody<IFeedbackID>, res: Response, next: NextFunction): Promise<void> {
+
+        const { feedback_id } = ExtractReqBody<IFeedbackID>(req);
+        const user = ExtractReqUser(req);
+
+        const deletedUserFeedback = await FeedbackModels.deleteUserFeedbackById(user, feedback_id, next);
+
+        if (deletedUserFeedback) {
+            res.status(200).json({
+                ...deletedUserFeedback,
+                message: 'User\'s feedback has been successfully deleted.',
+                type: 'DELETE'
+            });
+        }
 
     }
 
-    // DELETE: ALL user's feedback by its id in JWT
-    async deleteUserFeedbacksById(req: Request, res: Response, next: NextFunction) {
+    // ** The ID is from params
+    async getUserFeedbacksById(req: IRequestCustomParams<IUserID>, res: Response, next: NextFunction) {
+
+        const { user_id } = ExtractReqParams<IUserID>(req);
+
+        const userFeedbacks = await FeedbackModels.getUserFeedbacksById(user_id, next);
+
+        if (userFeedbacks && userFeedbacks?.length > 0) {
+            res.status(200).json([...userFeedbacks]);
+            return;
+        }
+
+        res.status(404).json({
+            message: 'There\'s no feedbacks found of the user.',
+        });
 
     }
-
 }
 
 export {
-    FeedbackService,
     UserFeedbackService,
     PlaceFeedbackService
 }
