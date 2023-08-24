@@ -8,5 +8,5 @@ type IPlaceUpdateInput = z.infer<typeof updatePlace>;
 export {
     IPlaceID,
     IPlaceCreateInput,
-    IPlaceUpdateInput
+    IPlaceUpdateInput,
 }

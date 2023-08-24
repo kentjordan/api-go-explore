@@ -20,9 +20,9 @@ export default class PlacesService {
 
     async getPlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
 
-        const { id } = ExtractReqParams<IPlaceID>(req);
+        const { place_id } = ExtractReqParams<IPlaceID>(req);
 
-        const place = await PlaceModels.getPlaceById(id, next);
+        const place = await PlaceModels.getPlaceById(place_id, next);
 
         if (place) {
             res.status(200).json({ ...place });
@@ -43,10 +43,10 @@ export default class PlacesService {
 
     async updatePlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
 
-        const { id } = ExtractReqParams<IPlaceID>(req);
+        const { place_id } = ExtractReqParams<IPlaceID>(req);
         const updateIput = ExtractReqBody<IPlaceUpdateInput>(req);
 
-        const updatedPlace = await PlaceModels.updatePlaceById(id, updateIput, next);
+        const updatedPlace = await PlaceModels.updatePlaceById(place_id, updateIput, next);
 
         if (updatedPlace) {
             res.status(201).json({ ...updatedPlace });
@@ -56,9 +56,9 @@ export default class PlacesService {
 
     async deletePlaceById(req: IRequestCustomParams<IPlaceID>, res: Response, next: NextFunction) {
 
-        const { id } = ExtractReqParams<IPlaceID>(req);
+        const { place_id } = ExtractReqParams<IPlaceID>(req);
 
-        const deletedPlace = await PlaceModels.deletePlaceById(id, next);
+        const deletedPlace = await PlaceModels.deletePlaceById(place_id, next);
 
         if (deletedPlace) {
             res.status(200).json({ ...deletedPlace });

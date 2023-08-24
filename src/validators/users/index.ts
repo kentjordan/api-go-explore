@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const userId = z.object({
-    id: z.string().uuid()
-});
+    user_id: z.string().uuid()
+}).strict();
 
 const createUser = z.object({
     first_name: z.string().min(1),

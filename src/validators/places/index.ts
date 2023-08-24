@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const placeId = z.object({
-    id: z.string(),
-});
+    place_id: z.string().uuid(),
+}).strict();
 
 const createPlace = z.object({
     category: z.string(),

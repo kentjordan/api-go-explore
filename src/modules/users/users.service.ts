@@ -26,9 +26,9 @@ export default class UsersService {
 
     async getUserById(req: IRequestCustomParams<IUserID>, res: Response, next: NextFunction) {
 
-        const { id } = ExtractReqParams<IUserID>(req);
+        const { user_id } = ExtractReqParams<IUserID>(req);
 
-        const user = await UserModels.getUserById(id, next);
+        const user = await UserModels.getUserById(user_id, next);
 
         if (user) {
             res.status(200).json({ ...user });
@@ -48,10 +48,10 @@ export default class UsersService {
 
     async updateUser(req: IRequestCustomBody<IUserUpdateInput>, res: Response, next: NextFunction) {
 
-        const { id } = ExtractReqParams<IUserID>(req);
+        const { user_id } = ExtractReqParams<IUserID>(req);
         const updateInput = ExtractReqBody<IUserUpdateInput>(req);
 
-        const user = await UserModels.updateUser(id, updateInput, next);
+        const user = await UserModels.updateUser(user_id, updateInput, next);
 
         if (user) {
             res.status(201).json({
@@ -65,9 +65,9 @@ export default class UsersService {
 
     async deleteUser(req: IRequestCustomQuery<IUserID>, res: Response, next: NextFunction) {
 
-        const { id } = ExtractReqParams<IUserID>(req);
+        const { user_id } = ExtractReqParams<IUserID>(req);
 
-        const user = await UserModels.deleteUserById(id, next);
+        const user = await UserModels.deleteUserById(user_id, next);
 
         if (user) {
             res.status(200).json({
