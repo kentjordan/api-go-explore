@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
-import { ExtractReqBody, ExtractReqParams } from '~/utils/request.util';
+import { ExtractReqBody, ExtractReqParams, ExtractReqQuery } from '~/utils/request.util';
 import { ZodType } from 'zod';
-import { IRequestCustomBody, IRequestCustomParams } from '~/@types/request';
+import { IRequestCustomBody, IRequestCustomParams, IRequestCustomQuery } from '~/@types/request';
 
 function validateBody<T>(validator: ZodType) {
 
@@ -33,7 +33,25 @@ function validateParams<T>(validator: ZodType) {
     }
 }
 
+function validateQuery<T>(validator: ZodType) {
+
+    return async (req: IRequestCustomQuery<T>, res: Response, next: NextFunction) => {
+
+        const query = ExtractReqQuery(req);
+
+        try {
+            await validator.parseAsync(query);
+            next();
+        } catch (error: unknown) {
+            next(error);
+        }
+
+    }
+
+}
+
 export {
     validateBody,
-    validateParams
+    validateParams,
+    validateQuery
 }
