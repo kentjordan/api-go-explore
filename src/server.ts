@@ -9,6 +9,7 @@ import { default as searchRouter } from '~/modules/search/search.router';
 import { default as feedbacksRouter } from '~/modules/feedbacks/feedbacks.router';
 import { default as itinerariesRouter } from '~/modules/itineraries/itineraries.router';
 import { default as authRouter } from '~/modules/auth/auth.router';
+import { default as visitePlaceRouter } from '~/modules/visit_place/visitPlace.router';
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
@@ -36,6 +37,7 @@ server.use('/places', placesRouter);
 server.use('/users', usersRouter);
 server.use('/images', imagesRouter);
 server.use('/events', eventsRouter);
+server.use('/visit-place', visitePlaceRouter);
 
 server.use(error);
 
