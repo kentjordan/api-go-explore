@@ -1,3 +1,5 @@
+import { z } from 'zod';
+import { processEnv } from '~/validators/env'
 import { PrismaClient } from '@prisma/client'
 
 interface UploadedFilesPath {
@@ -24,16 +26,6 @@ export declare global {
     }
 
     namespace NodeJS {
-        interface ProcessEnv {
-            API_HOST: string;
-            API_PORT: string;
-            DB_NAME: string;
-            DB_HOSTNAME: string;
-            DB_USERNAME: string;
-            DB_PASSWORD: string;
-            DATABASE_URL: string;
-            SECRET_KEY: string;
-            NODE_ENV: 'production' | 'development';
-        }
+        interface ProcessEnv extends z.infer<typeof processEnv> { }
     }
 }

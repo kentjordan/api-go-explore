@@ -9,12 +9,13 @@ const createUser = z.object({
     last_name: z.string().min(1),
     email: z.string().email(),
     password: z.string().min(8),
+    gender: z.number(),
     role: z.enum(['ADMIN', 'REGULAR']),
     from_country: z.string().min(1),
     current_province: z.string().min(1),
     current_city: z.string().min(1),
     current_barangay: z.string().min(1)
-});
+}).strict();
 
 const updateUser = z.object({
     first_name: z.string().min(1).optional(),
@@ -26,7 +27,7 @@ const updateUser = z.object({
     current_province: z.string().min(1).optional(),
     current_city: z.string().min(1).optional(),
     current_barangay: z.string().min(1).optional()
-});
+}).strict();
 
 export {
     userId,

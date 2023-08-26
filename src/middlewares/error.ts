@@ -1,4 +1,4 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
 import { NextFunction, Request, Response } from "express";
 import { MulterError } from "multer";
 import { PrismaError } from "prisma-error-enum";
@@ -55,6 +55,15 @@ export default function error(err: unknown, req: Request, res: Response, next: N
             return;
         }
 
+    }
+
+    if (err instanceof PrismaClientUnknownRequestError) {
+        res.status(400).json({
+            message: 'Bad Request',
+            db_err_type: 'Please provide an valid input.',
+            type: 'Database Error',
+        });
+        return;
     }
 
     if (err instanceof ZodError) {
