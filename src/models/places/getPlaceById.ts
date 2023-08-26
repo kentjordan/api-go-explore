@@ -6,12 +6,18 @@ async function getPlaceById(id: string, next: NextFunction) {
 
         const place = await prismaClient.place.findFirstOrThrow({
             select: {
+                id: true,
+                created_at: true,
+                updated_at: true,
                 category: true,
                 title: true,
                 description: true,
                 photos: true,
-                updated_at: true,
-                _count: true
+                contact: true,
+                social_links: true,
+                province: true,
+                city: true,
+                barangay: true
             },
             where: { id }
         });
