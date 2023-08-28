@@ -4,6 +4,10 @@ const placeId = z.object({
     place_id: z.string().uuid(),
 }).strict();
 
+const placeCategory = z.object({
+    place_category: z.string().uuid(),
+}).strict();
+
 const createPlace = z.object({
     category: z.string(),
     title: z.string(),
@@ -29,5 +33,6 @@ const updatePlace = z.object({
 export {
     placeId,
     createPlace,
-    updatePlace
+    updatePlace,
+    placeCategory
 }

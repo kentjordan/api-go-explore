@@ -13,7 +13,9 @@ const visitPlaceByUserId = async (req: IRequestCustomParams<IPlaceID>, res: Resp
 
     if (visitedPlace) {
         res.status(200).json({
-            message: `Visited ${place_id}`
+            by: id,
+            message: `Visited`,
+            place_id
         });
     }
 
@@ -27,7 +29,9 @@ const visitPlaceByUserAnon = async (req: IRequestCustomParams<IPlaceID>, res: Re
 
     if (visitedPlace) {
         res.status(200).json({
-            message: `Visited ${place_id}`
+            by: 'Anonymous',
+            message: `Visited`,
+            place_id
         });
     }
 
