@@ -10,6 +10,7 @@ import { default as feedbacksRouter } from '~/modules/feedbacks/feedbacks.router
 import { default as itinerariesRouter } from '~/modules/itineraries/itineraries.router';
 import { default as authRouter } from '~/modules/auth/auth.router';
 import { default as visitPlaceRouter } from '~/modules/visit_place/visitPlace.router';
+import { default as analyticsRouter } from "~/modules/analytics/analytics.router";
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
@@ -38,6 +39,7 @@ server.use('/users', usersRouter);
 server.use('/images', imagesRouter);
 server.use('/events', eventsRouter);
 server.use('/visit-place', visitPlaceRouter);
+server.use('/analytics', analyticsRouter);
 
 server.use(error);
 
