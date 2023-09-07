@@ -1,7 +1,7 @@
 
 import { NextFunction } from "express";
 
-interface IPlaceOverallMostVisitedByCategory {
+interface IPlaceOverallMostVisitedPlaceByCategory {
     place_id: string,
     category: string,
     title: string,
@@ -13,7 +13,7 @@ interface IPlaceOverallMostVisitedByCategory {
 async function getMostVisitedPlaceByCategory(next: NextFunction, limit: number = 5, category: string) {
     try {
 
-        const mostVisitedPlacesByCategory = await prismaClient.$queryRaw <Array<IPlaceOverallMostVisitedByCategory>>`
+        const mostVisitedPlacesByCategory = await prismaClient.$queryRaw <Array<IPlaceOverallMostVisitedPlaceByCategory>>`
             SELECT place_id, p.category, p.title, p.province, p.city, COUNT(place_Id) as visited_count
             FROM "VisitedPlace" as vp JOIN "Place" as p ON vp.place_id = p.id
             WHERE p.category = ${category}
