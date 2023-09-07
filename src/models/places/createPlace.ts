@@ -9,6 +9,7 @@ async function createPlace(data: IPlaceCreateInput, next: NextFunction) {
             select: { id: true },
             data: {
                 ...data,
+                category: data.category.toLowerCase(),
                 created_at: new Date().toISOString(),
             }
         });
