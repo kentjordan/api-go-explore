@@ -7,7 +7,13 @@ const router = Router();
 // ** /analytics/places/most-rated?category=...&limit=n
 router.get('/places/most-visited',
     jwtAuth,
-    AnalyticsService.getOverallMostVisitedPlace
+    AnalyticsService.getMostVisitedPlace
+);
+
+// ** /analytics/places/most-rated?category=...&limit=n
+router.get('/places/most-rated',
+    jwtAuth,
+    AnalyticsService.getMostRatedPlace
 );
 
 export default router;
