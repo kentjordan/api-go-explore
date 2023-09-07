@@ -16,7 +16,7 @@ async function getMostVisitedPlaceByCategory(next: NextFunction, limit: number =
         const mostVisitedPlacesByCategory = await prismaClient.$queryRaw <Array<IPlaceOverallMostVisitedPlaceByCategory>>`
             SELECT place_id, p.category, p.title, p.province, p.city, COUNT(place_Id) as visited_count
             FROM "VisitedPlace" as vp JOIN "Place" as p ON vp.place_id = p.id
-            WHERE p.category = ${category}
+            WHERE p.category = ${category.toLowerCase()}
             GROUP BY vp.place_id, p.category, p.title, p.province, p.city
             ORDER BY visited_count DESC
             LIMIT ${limit};
