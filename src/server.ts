@@ -15,6 +15,7 @@ import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
 import helmet from 'helmet';
+import '~/schedulers';
 
 const server = express();
 

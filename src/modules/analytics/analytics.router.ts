@@ -16,4 +16,10 @@ router.get('/places/most-rated',
     AnalyticsService.getMostRatedPlace
 );
 
+// ** /analytics/users/most-active?limit=n
+router.get('/users/most-active',
+    jwtAuth,
+    AnalyticsService.getMostActiveUsersByPlace
+);
+
 export default router;
