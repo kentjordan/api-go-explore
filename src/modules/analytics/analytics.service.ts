@@ -13,6 +13,10 @@ interface IMostRatedPlace {
     limit: string
 }
 
+interface IMostActiveUserByPlace {
+    limit: string
+}
+
 const getMostVisitedPlace = async (req: IRequestCustomQuery<IMostVisitedPlace>, res: Response, next: NextFunction) => {
 
     const { limit, category } = ExtractReqQuery<IMostVisitedPlace>(req);
@@ -39,9 +43,7 @@ const getMostVisitedPlace = async (req: IRequestCustomQuery<IMostVisitedPlace>, 
 
 const getMostRatedPlace = async (req: IRequestCustomQuery<IMostRatedPlace>, res: Response, next: NextFunction) => {
 
-
     const { limit, category } = ExtractReqQuery<IMostRatedPlace>(req);
-
 
     if (category) {
         const mostRatedPlacesByCategory = await AnalyticsModels.getMostRatedPlaceByCategory(next, parseInt(limit), category);
@@ -49,11 +51,29 @@ const getMostRatedPlace = async (req: IRequestCustomQuery<IMostRatedPlace>, res:
         return;
     }
 
-    res.status(200).json({ messsage: 'No category was provided' });
+    const overallMostRatedPlace = await AnalyticsModels.getOverallMostRatedPlace(next, parseInt(limit));
+
+    if (overallMostRatedPlace) {
+        res.status(200).json([...overallMostRatedPlace]);
+        return;
+    }
+
+}
+
+const getMostActiveUsersByPlace = async (req: IRequestCustomQuery<IMostActiveUserByPlace>, res: Response, next: NextFunction) => {
+
+    const { limit } = ExtractReqQuery<IMostActiveUserByPlace>(req);
+
+    const mostActiveUsersByPlaces = await AnalyticsModels.getMostActiveUserByPlace(next, parseInt(limit));
+
+    if (mostActiveUsersByPlaces) {
+        res.status(200).json([...mostActiveUsersByPlaces]);
+    }
 
 }
 
 export {
     getMostVisitedPlace,
-    getMostRatedPlace
+    getMostRatedPlace,
+    getMostActiveUsersByPlace
 }

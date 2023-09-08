@@ -94,3 +94,12 @@ CREATE TABLE "Feedback"(
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
     CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
 );
+
+CREATE TABLE "LoggedInHistory"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    refresh_token TEXT,
+    user_id UUID,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id)
+);
