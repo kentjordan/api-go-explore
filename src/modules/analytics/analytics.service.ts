@@ -17,6 +17,10 @@ interface IMostActiveUserByPlace {
     limit: string
 }
 
+interface IUsersStats {
+    field: string
+}
+
 const getMostVisitedPlace = async (req: IRequestCustomQuery<IMostVisitedPlace>, res: Response, next: NextFunction) => {
 
     const { limit, category } = ExtractReqQuery<IMostVisitedPlace>(req);
@@ -72,8 +76,31 @@ const getMostActiveUsersByPlace = async (req: IRequestCustomQuery<IMostActiveUse
 
 }
 
+const getUsersStats = async (req: IRequestCustomQuery<IUsersStats>, res: Response, next: NextFunction) => {
+
+    const { field } = ExtractReqQuery<IUsersStats>(req);
+
+    if (field) {
+        const usersCount = await AnalyticsModels.getUsersCountByField(field, next);
+
+        res.status(200).json({
+            ...usersCount
+        });
+
+        return;
+    }
+
+    const overallUsersCount = await AnalyticsModels.getOverallUsersCount(next);
+
+    res.status(200).json({
+        ...overallUsersCount,
+    });
+
+}
+
 export {
     getMostVisitedPlace,
     getMostRatedPlace,
-    getMostActiveUsersByPlace
+    getMostActiveUsersByPlace,
+    getUsersStats
 }

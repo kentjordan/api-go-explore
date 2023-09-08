@@ -22,4 +22,10 @@ router.get('/users/most-active',
     AnalyticsService.getMostActiveUsersByPlace
 );
 
+// ** /analytics/users/stats?field=...
+router.get('/users/stats',
+    jwtAuth,
+    AnalyticsService.getUsersStats
+);
+
 export default router;
