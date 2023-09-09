@@ -103,3 +103,11 @@ CREATE TABLE "LoggedInHistory"(
     user_id UUID,
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id)
 );
+
+CREATE TABLE "LearnMore"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    images TEXT[],
+    description TEXT
+);
