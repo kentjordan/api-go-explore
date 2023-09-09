@@ -3,7 +3,7 @@ import * as LearnMoreService from './learnMore.service';
 import * as LearnMoreValidators from '~/validators/learn_more';
 import { jwtAuth } from "~/middlewares/auth/jwtAuth";
 import { validateBody, validateParams } from "~/middlewares/validators/request.val";
-import { ILearnMoreCreateInput, ILearnMoreIDInput, ILearnMoreUpdateInput } from "~/@types/learn_more";
+import { ILearnMoreCreateInput, ILearnMoreIDInput, ILearnMoreUpdateInput } from "~/@types/modules/learn_more";
 
 const router = Router();
 

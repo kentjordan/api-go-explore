@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { ILearnMoreCreateInput, ILearnMoreIDInput, ILearnMoreUpdateInput } from "~/@types/learn_more";
+import { ILearnMoreCreateInput, ILearnMoreIDInput, ILearnMoreUpdateInput } from "~/@types/modules/learn_more";
 import { IRequestCustomParams } from "~/@types/request";
 import * as LearnMoreModels from '~/models/learn_more';
 import { ExtractReqBody, ExtractReqParams } from "~/utils/request.util";

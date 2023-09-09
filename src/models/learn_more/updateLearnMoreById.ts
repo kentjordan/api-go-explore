@@ -1,5 +1,5 @@
 import { NextFunction } from "express";
-import { ILearnMoreUpdateInput } from "~/@types/learn_more";
+import { ILearnMoreUpdateInput } from "~/@types/modules/learn_more";
 
 const updateLearnMoreById = async (id: string, input: ILearnMoreUpdateInput, next: NextFunction) => {
 
