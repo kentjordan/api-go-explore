@@ -18,6 +18,9 @@ const createLearnMore = async (req: Request, res: Response, next: NextFunction) 
 
 }
 
+const getAllLearnMore = async (req: Request, res: Response, next: NextFunction) => {
+}
+
 const getLearnMoreById = async (req: IRequestCustomParams<ILearnMoreIDInput>, res: Response, next: NextFunction) => {
 
     const params = ExtractReqParams<ILearnMoreIDInput>(req)

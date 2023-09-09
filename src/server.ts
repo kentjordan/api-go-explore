@@ -12,6 +12,7 @@ import { default as authRouter } from '~/modules/auth/auth.router';
 import { default as visitPlaceRouter } from '~/modules/visit_place/visitPlace.router';
 import { default as analyticsRouter } from "~/modules/analytics/analytics.router";
 import { default as learnMoreRouter } from "~/modules/learn_more/learnMore.router";
+import { default as footerRouter } from "~/modules/footer/footer.router";
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
@@ -43,6 +44,7 @@ server.use('/events', eventsRouter);
 server.use('/visit-place', visitPlaceRouter);
 server.use('/analytics', analyticsRouter);
 server.use('/learn-more', learnMoreRouter);
+server.use('/footer', footerRouter);
 
 server.use(error);
 

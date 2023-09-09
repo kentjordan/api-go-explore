@@ -111,3 +111,10 @@ CREATE TABLE "LearnMore"(
     images TEXT[],
     description TEXT
 );
+
+CREATE TABLE "Footer"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    description TEXT
+);
