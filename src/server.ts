@@ -14,6 +14,8 @@ import { default as analyticsRouter } from "~/modules/analytics/analytics.router
 import { default as learnMoreRouter } from "~/modules/learn_more/learnMore.router";
 import { default as footerRouter } from "~/modules/footer/footer.router";
 import { default as thingsToBringRouter } from "~/modules/things_to_bring/thingsToBring.router";
+import { default as thingsToAvoidRouter } from "~/modules/things_to_avoid/thingsToAvoid.router";
+
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
@@ -50,6 +52,7 @@ server.use('/analytics', analyticsRouter);
 server.use('/learn-more', learnMoreRouter);
 server.use('/footer', footerRouter);
 server.use('/things-to-bring', thingsToBringRouter);
+server.use('/things-to-avoid', thingsToAvoidRouter);
 
 server.use(error);
 

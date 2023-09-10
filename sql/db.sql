@@ -127,3 +127,12 @@ CREATE TABLE "ThingToBring"(
     title TEXT,
     description TEXT
 );
+
+CREATE TABLE "ThingToAvoid"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    images TEXT[],
+    title TEXT,
+    description TEXT
+);
