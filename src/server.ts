@@ -18,6 +18,7 @@ import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
 import helmet from 'helmet';
 import '~/utils/schedulers';
+import { accessLogger, errorLogger } from '~/utils/logger';
 
 const server = express();
 
@@ -28,6 +29,8 @@ server.use(cors({
     credentials: true
 }));
 
+server.use(accessLogger());
+server.use(errorLogger());
 server.use(helmet());
 server.use(json());
 server.use(jwtSetup.initialize());
@@ -49,5 +52,10 @@ server.use('/footer', footerRouter);
 server.use(error);
 
 server.listen(process.env.API_PORT, () => {
-    console.log('Server is listening on', process.env.API_PORT);
+    console.log('*******************************');
+    console.log('* Server is listening on', process.env.API_PORT, '*');
+    console.log('*******************************');
+    if (process.env.NODE_ENV === 'development') {
+        console.log('\nLogs:\n');
+    }
 });

@@ -1,0 +1,121 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @db.Timestamp(6)
+  title       String?
+  description String?
+  date        DateTime? @db.Timestamp(6)
+  images      String[]
+  city        String?
+  province    String?
+  barangay    String?
+}
+
+model Feedback {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @db.Timestamp(6)
+  rating     Float?
+  comment    String?
+  user_id    String?   @db.Uuid
+  place_id   String?   @db.Uuid
+  Place      Place?    @relation(fields: [place_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_place_id")
+  User       User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+}
+
+model Footer {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @db.Timestamp(6)
+  description String?
+}
+
+model Itinerary {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @db.Timestamp(6)
+  place_id   String?   @db.Uuid
+  user_id    String?   @db.Uuid
+  Place      Place?    @relation(fields: [place_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_place_id")
+  User       User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+}
+
+model LearnMore {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @db.Timestamp(6)
+  images      String[]
+  description String?
+}
+
+model LoggedInHistory {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  updated_at    DateTime? @db.Timestamp(6)
+  refresh_token String?
+  user_id       String?   @db.Uuid
+  User          User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+}
+
+model Place {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at   DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime?      @db.Timestamp(6)
+  category     String?
+  social_links Json?          @db.Json
+  title        String?
+  description  String?
+  photos       String[]
+  contact      String?        @db.VarChar(16)
+  province     String?
+  city         String?
+  barangay     String?
+  Feedback     Feedback[]
+  Itinerary    Itinerary[]
+  VisitedPlace VisitedPlace[]
+}
+
+model User {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at       DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?         @db.Timestamp(6)
+  first_name       String
+  last_name        String
+  gender           Int               @db.SmallInt
+  email            String            @unique
+  password         String
+  role             role?             @default(REGULAR)
+  from_country     String
+  current_province String
+  current_city     String
+  current_barangay String
+  Feedback         Feedback[]
+  Itinerary        Itinerary[]
+  LoggedInHistory  LoggedInHistory[]
+  VisitedPlace     VisitedPlace[]
+}
+
+model VisitedPlace {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @db.Timestamp(6)
+  user_id    String?   @db.Uuid
+  place_id   String?   @db.Uuid
+  Place      Place?    @relation(fields: [place_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_place_id")
+  User       User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+}
+
+enum role {
+  ADMIN
+  REGULAR
+}

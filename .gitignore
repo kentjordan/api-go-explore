@@ -1,6 +1,5 @@
 # Folders
 node_modules
-prisma
 dist
 
 uploaded_files/images/*
