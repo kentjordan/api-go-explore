@@ -13,6 +13,7 @@ import { default as visitPlaceRouter } from '~/modules/visit_place/visitPlace.ro
 import { default as analyticsRouter } from "~/modules/analytics/analytics.router";
 import { default as learnMoreRouter } from "~/modules/learn_more/learnMore.router";
 import { default as footerRouter } from "~/modules/footer/footer.router";
+import { default as thingsToBringRouter } from "~/modules/things_to_bring/thingsToBring.router";
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
 import cors from 'cors';
@@ -48,6 +49,7 @@ server.use('/visit-place', visitPlaceRouter);
 server.use('/analytics', analyticsRouter);
 server.use('/learn-more', learnMoreRouter);
 server.use('/footer', footerRouter);
+server.use('/things-to-bring', thingsToBringRouter);
 
 server.use(error);
 

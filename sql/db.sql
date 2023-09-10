@@ -118,3 +118,12 @@ CREATE TABLE "Footer"(
     updated_at TIMESTAMP,
     description TEXT
 );
+
+CREATE TABLE "ThingToBring"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    images TEXT[],
+    title TEXT,
+    description TEXT
+);
