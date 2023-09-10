@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 
-const deleteFooterById = async (thingToBring_id: string, next: NextFunction) => {
+const deleteThingToBringById = async (thingToBring_id: string, next: NextFunction) => {
     try {
         return await prismaClient.thingToBring.delete({
             where: {
@@ -12,4 +12,4 @@ const deleteFooterById = async (thingToBring_id: string, next: NextFunction) => 
     }
 }
 
-export default deleteFooterById;
+export default deleteThingToBringById;

@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 
-const getAllFooter = async (next: NextFunction) => {
+const getAllThingsToBring = async (next: NextFunction) => {
     try {
         return await prismaClient.thingToBring.findMany();
     } catch (error: unknown) {
@@ -8,4 +8,4 @@ const getAllFooter = async (next: NextFunction) => {
     }
 }
 
-export default getAllFooter;
+export default getAllThingsToBring;

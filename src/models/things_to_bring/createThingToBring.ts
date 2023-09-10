@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 import { IThingToBringCreateInput } from "~/@types/modules/things_to_bring";
 
-const createFooter = async (input: IThingToBringCreateInput, next: NextFunction) => {
+const createThingToBring = async (input: IThingToBringCreateInput, next: NextFunction) => {
     try {
         return await prismaClient.thingToBring.create({
             select: {
@@ -16,4 +16,4 @@ const createFooter = async (input: IThingToBringCreateInput, next: NextFunction)
     }
 }
 
-export default createFooter;
+export default createThingToBring;

@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 
-const getFooterById = async (thingToBring_id: string, next: NextFunction) => {
+const getThingToBringById = async (thingToBring_id: string, next: NextFunction) => {
 
     try {
         return await prismaClient.thingToBring.findUniqueOrThrow({
@@ -14,4 +14,4 @@ const getFooterById = async (thingToBring_id: string, next: NextFunction) => {
 
 }
 
-export default getFooterById;
+export default getThingToBringById;
