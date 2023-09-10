@@ -15,6 +15,7 @@ import { default as learnMoreRouter } from "~/modules/learn_more/learnMore.route
 import { default as footerRouter } from "~/modules/footer/footer.router";
 import { default as thingsToBringRouter } from "~/modules/things_to_bring/thingsToBring.router";
 import { default as thingsToAvoidRouter } from "~/modules/things_to_avoid/thingsToAvoid.router";
+import { default as thingsToRememberRouter } from "~/modules/things_to_remember/thingsToRemember.router";
 
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
@@ -53,6 +54,7 @@ server.use('/learn-more', learnMoreRouter);
 server.use('/footer', footerRouter);
 server.use('/things-to-bring', thingsToBringRouter);
 server.use('/things-to-avoid', thingsToAvoidRouter);
+server.use('/things-to-remember', thingsToRememberRouter);
 
 server.use(error);
 

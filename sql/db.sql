@@ -136,3 +136,12 @@ CREATE TABLE "ThingToAvoid"(
     title TEXT,
     description TEXT
 );
+
+CREATE TABLE "ThingToRemember"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    images TEXT[],
+    title TEXT,
+    description TEXT
+);
