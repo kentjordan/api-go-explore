@@ -13,6 +13,10 @@ router.post('/',
     FooterServices.createFooter
 );
 
+router.get('/',
+    FooterServices.getAllFooters
+);
+
 router.get('/:footer_id',
     validateParams<IFooterIDInput>(FooterValidators.footerId),
     FooterServices.getFooterById
