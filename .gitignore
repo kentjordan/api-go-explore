@@ -7,3 +7,6 @@ uploaded_files/others/*
 
 # Files
 .env
+
+logs/access.log
+logs/error.log
