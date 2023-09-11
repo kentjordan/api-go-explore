@@ -12,13 +12,10 @@ const strategy = new JwtStrategy({
     const epochNow = Math.ceil(Date.now() / 1000);
 
     if (payload.exp >= epochNow) {
-        done(null, user);
-        return;
+        return done(null, user);
     }
 
-    done(null, undefined);
-
-    return;
+    return done(null, undefined);
 });
 
 const jwtSetup = passport.use('jwt-auth', strategy);
