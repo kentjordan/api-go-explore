@@ -16,6 +16,7 @@ import { default as footerRouter } from "~/modules/footer/footer.router";
 import { default as thingsToBringRouter } from "~/modules/things_to_bring/thingsToBring.router";
 import { default as thingsToAvoidRouter } from "~/modules/things_to_avoid/thingsToAvoid.router";
 import { default as thingsToRememberRouter } from "~/modules/things_to_remember/thingsToRemember.router";
+import { default as loveOurPlanetRouter } from "~/modules/love_our_planet/loveOurPlanet.router";
 
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
@@ -55,6 +56,7 @@ server.use('/footer', footerRouter);
 server.use('/things-to-bring', thingsToBringRouter);
 server.use('/things-to-avoid', thingsToAvoidRouter);
 server.use('/things-to-remember', thingsToRememberRouter);
+server.use('/love-our-planet', loveOurPlanetRouter);
 
 server.use(error);
 

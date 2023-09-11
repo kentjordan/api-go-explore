@@ -142,6 +142,13 @@ model ThingToRemember {
   description String?
 }
 
+model LoveOurPlanet {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @db.Timestamp(6)
+  title      String?
+}
+
 enum role {
   ADMIN
   REGULAR
