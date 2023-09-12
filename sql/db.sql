@@ -152,3 +152,12 @@ CREATE TABLE "LoveOurPlanet"(
     updated_at TIMESTAMP,
 	title TEXT
 );
+
+CREATE TABLE "Preferences"(
+	id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+	preferenced_categories TEXT[],
+	user_id UUID UNIQUE,
+	CONSTRAINT fk_userId FOREIGN KEY (user_id) REFERENCES "User"(id)
+);
