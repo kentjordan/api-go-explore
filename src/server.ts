@@ -18,6 +18,7 @@ import { default as thingsToAvoidRouter } from "~/modules/things_to_avoid/things
 import { default as thingsToRememberRouter } from "~/modules/things_to_remember/thingsToRemember.router";
 import { default as loveOurPlanetRouter } from "~/modules/love_our_planet/loveOurPlanet.router";
 import { default as preferencesRouter } from "~/modules/preferences/preferences.router";
+import { default as recommendationRouter } from '~/modules/recommendation/recommendation.router';
 
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
@@ -59,6 +60,7 @@ server.use('/things-to-avoid', thingsToAvoidRouter);
 server.use('/things-to-remember', thingsToRememberRouter);
 server.use('/love-our-planet', loveOurPlanetRouter);
 server.use('/preferences', preferencesRouter);
+server.use('/recommendation', recommendationRouter);
 
 server.use(error);
 
