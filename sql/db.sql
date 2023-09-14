@@ -161,3 +161,12 @@ CREATE TABLE "Preferences"(
 	user_id UUID UNIQUE,
 	CONSTRAINT fk_userId FOREIGN KEY (user_id) REFERENCES "User"(id)
 );
+
+CREATE TABLE "WhereToGo"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    images TEXT[],
+    title TEXT,
+    description TEXT
+);
