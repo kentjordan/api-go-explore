@@ -1,6 +1,14 @@
 import { NextFunction } from "express";
 import getUserPreferences from "./getUserPreferences";
 
+type RecommendationByPopularity = Array<{
+    status: string,
+    value: {
+        category: string,
+        data: Array<any>
+    }
+}>;
+
 interface IUserPreferencesRecommendation {
     title: string,
     category: string,
@@ -72,14 +80,6 @@ const recommendationByPopularity = async (user_id: string) => {
     });
 
 }
-
-type RecommendationByPopularity = Array<{
-    status: string,
-    value: {
-        category: string,
-        data: Array<any>
-    }
-}>;
 
 const getUserRecommendationByPreferences = async (user_id: string, next: NextFunction) => {
     try {
