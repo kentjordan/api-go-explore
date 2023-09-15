@@ -1,5 +1,6 @@
 import { NextFunction } from "express";
 import getUserPreferences from "./getUserPreferences";
+import getVisitedPlacesCount from "../getVisitedPlacesCount";
 
 type RecommendationByPopularity = Array<{
     status: string,
@@ -84,16 +85,9 @@ const recommendationByPopularity = async (user_id: string) => {
 const getUserRecommendationByPreferences = async (user_id: string, next: NextFunction) => {
     try {
 
-        const [{ count: visited_count }] = await prismaClient.$queryRaw<{ count: number }[]>`
-            SELECT COUNT(*)
-            FROM (
-                SELECT user_id
-                FROM "VisitedPlace"
-                GROUP BY user_id
-            ) AS v;
-        `;
+        const visited_count = await getVisitedPlacesCount(next);
 
-        if (visited_count >= 10) {
+        if (visited_count as number >= 10) {
             return await recommendationByPopularity(user_id);
         }
 
