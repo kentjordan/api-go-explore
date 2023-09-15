@@ -4,10 +4,13 @@ import * as RecommendationModels from "~/models/recommendation";
 
 const getPublicRecommendationPlaces = async (req: Request, res: Response, next: NextFunction) => {
 
-    res.status(200).json({
-        method: req.method,
-        body: req.body
-    });
+    const { type } = req.query as { type: string };
+
+    const publicRecommendations = await RecommendationModels.getPublicRecommendationPlaces(type, next);
+
+    if (publicRecommendations) {
+        res.status(200).json([...publicRecommendations]);
+    }
 
 }
 
