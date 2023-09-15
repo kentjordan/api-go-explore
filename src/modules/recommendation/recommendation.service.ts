@@ -23,7 +23,21 @@ const getUserRecommendationByPreferences = async (req: Request, res: Response, n
 
 }
 
+const getUserRecommendationByHistory = async (req: Request, res: Response, next: NextFunction) => {
+
+    const { id: user_id } = ExtractReqUser(req);
+
+    const userRecommendations = await RecommendationModels.getUserRecommendationByHistory(user_id, next);
+
+    if (userRecommendations) {
+        res.status(200).json(userRecommendations);
+    }
+
+}
+
+
 export {
     getPublicRecommendationPlaces,
-    getUserRecommendationByPreferences
+    getUserRecommendationByPreferences,
+    getUserRecommendationByHistory
 }

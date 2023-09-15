@@ -8,9 +8,15 @@ router.get('/public',
     RecommendationServices.getPublicRecommendationPlaces
 );
 
-router.get('/user',
+router.get('/user/preferences',
     jwtAuth,
     RecommendationServices.getUserRecommendationByPreferences
 );
+
+router.get('/user/history',
+    jwtAuth,
+    RecommendationServices.getUserRecommendationByHistory
+);
+
 
 export default router;
