@@ -20,6 +20,7 @@ import { default as loveOurPlanetRouter } from "~/modules/love_our_planet/loveOu
 import { default as preferencesRouter } from "~/modules/preferences/preferences.router";
 import { default as recommendationRouter } from '~/modules/recommendation/recommendation.router';
 import { default as whereToGoRouter } from '~/modules/where-to-go/whereToGo.router';
+import { default as whereToStayRouter } from '~/modules/where-to-stay/whereToStay.router';
 
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
@@ -63,6 +64,7 @@ server.use('/love-our-planet', loveOurPlanetRouter);
 server.use('/preferences', preferencesRouter);
 server.use('/recommendation', recommendationRouter);
 server.use('/where-to-go', whereToGoRouter);
+server.use('/where-to-stay', whereToStayRouter);
 
 server.use(error);
 
