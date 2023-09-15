@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express"
 import { IWhereToGoCreateInput, IWhereToGoIDInput, IWhereToGoUpdateInput } from "~/@types/modules/where_to_go";
-import { IRequestCustomBody, IRequestCustomParams } from "~/@types/request";
+import { IRequestCustomBody, IRequestCustomParams, IRequestCustomQuery } from "~/@types/request";
 import * as WhereToGoModels from '~/models/where_to_go';
-import { ExtractReqBody, ExtractReqParams } from "~/utils/request.util";
+import { ExtractReqBody, ExtractReqParams, ExtractReqQuery } from "~/utils/request.util";
 
 const createWhereToGo = async (req: IRequestCustomBody<IWhereToGoCreateInput>, res: Response, next: NextFunction) => {
 
@@ -70,10 +70,23 @@ const updateWhereToGoById = async (req: IRequestCustomParams<IWhereToGoIDInput>,
 
 }
 
+const getWhereToGoNearby = async (req: IRequestCustomQuery<{ city: string }>, res: Response, next: NextFunction) => {
+
+    const { city } = ExtractReqQuery<{ city: string }>(req);
+
+    const nearbyPlaces = await WhereToGoModels.getWhereToGoNearby(city, next);
+
+    if (nearbyPlaces) {
+        res.status(200).json([...nearbyPlaces]);
+    }
+
+}
+
 export {
     createWhereToGo,
     deleteWhereToGo,
     getAllWhereToGo,
     updateWhereToGoById,
-    getWhereToGoById
+    getWhereToGoById,
+    getWhereToGoNearby
 }

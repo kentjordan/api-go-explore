@@ -13,13 +13,17 @@ router.post('/',
     WhereToGoServices.createWhereToGo
 );
 
+router.get('/',
+    WhereToGoServices.getAllWhereToGo
+);
+
+router.get('/nearby',
+    WhereToGoServices.getWhereToGoNearby
+);
+
 router.get('/:whereToGo_id',
     validateParams<IWhereToGoIDInput>(WhereToGoValidators.whereToGoId),
     WhereToGoServices.getWhereToGoById
-);
-
-router.get('/',
-    WhereToGoServices.getAllWhereToGo
 );
 
 router.delete('/:whereToGo_id',
