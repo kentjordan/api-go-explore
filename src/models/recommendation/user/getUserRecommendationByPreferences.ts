@@ -69,30 +69,24 @@ const recommendationByPopularity = async (user_id: string) => {
         }));
 
         return { category, data };
-
     });
 
     const response = await Promise.allSettled(recommendationsByPopularity) as RecommendationByPopularity;
 
-    return response.map((e, i) => {
-        return {
-            ...e.value
-        }
-    });
-
+    return response.map((e, i) => ({
+        ...e.value
+    }));
 }
 
 const getUserRecommendationByPreferences = async (user_id: string, next: NextFunction) => {
-    try {
 
+    try {
         const visited_count = await getVisitedPlacesCount(next);
 
         if (visited_count as number >= 10) {
             return await recommendationByPopularity(user_id);
         }
-
         return await recommendationByLatestAdded(user_id);
-
     } catch (error: unknown) {
         next(error);
     }
