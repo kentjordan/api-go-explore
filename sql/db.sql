@@ -44,7 +44,7 @@ CREATE TABLE "Place"(
     title TEXT,
     description TEXT,
     photos TEXT[],
-    contact VARCHAR(16),
+    contact TEXT[],
     province TEXT,
     city TEXT,
     barangay TEXT

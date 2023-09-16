@@ -19,20 +19,20 @@ router.get('/',
     service.getPlaces
 );
 
-router.get('/:id',
+router.get('/:place_id',
     jwtAuth,
     validateParams<IPlaceID>(PlaceValidator.placeId),
     service.getPlaceById
 );
 
-router.put('/:id',
+router.put('/:place_id',
     jwtAuth,
     validateParams<IPlaceID>(PlaceValidator.placeId),
     validateBody<IPlaceUpdateInput>(PlaceValidator.updatePlace),
     service.updatePlaceById
 );
 
-router.delete('/:id',
+router.delete('/:place_id',
     jwtAuth,
     validateParams<IPlaceID>(PlaceValidator.placeId),
     service.deletePlaceById

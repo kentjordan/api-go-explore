@@ -76,7 +76,7 @@ model Place {
   title        String?
   description  String?
   photos       String[]
-  contact      String?        @db.VarChar(16)
+  contact      String[]       @default([])
   province     String?
   city         String?
   barangay     String?

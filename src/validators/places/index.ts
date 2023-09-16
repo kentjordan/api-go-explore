@@ -13,7 +13,7 @@ const createPlace = z.object({
     title: z.string(),
     description: z.string(),
     photos: z.array(z.string()),
-    contact: z.string().max(16),
+    contact: z.array(z.string().min(1)),
     province: z.string(),
     city: z.string(),
     barangay: z.string()
@@ -24,7 +24,7 @@ const updatePlace = z.object({
     title: z.string().min(1).optional(),
     description: z.string().min(1).optional(),
     photos: z.array(z.string().min(1)).optional(),
-    contact: z.string().min(1).optional(),
+    contact: z.array(z.string().min(1)).optional(),
     province: z.string().min(1).optional(),
     city: z.string().min(1).optional(),
     barangay: z.string().min(1).optional(),
