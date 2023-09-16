@@ -24,9 +24,15 @@ class PlaceFeedbackService {
         const { place_id } = ExtractReqParams<IPlaceID>(req);
 
         const placeFeedbacks = await FeedbackModels.getPlaceFeedbacksById(place_id, next);
+        const placeAggregatedFeedbacks = await FeedbackModels.getPlaceFeedbacksByAggregation(place_id, next);
+        const placeAvgFeedback = await FeedbackModels.getPlaceAverageFeedback(place_id, next);
 
         if (placeFeedbacks) {
-            res.status(200).json([...placeFeedbacks]);
+            res.status(200).json({
+                avg: placeAvgFeedback,
+                all: [...placeFeedbacks],
+                aggregated: placeAggregatedFeedbacks,
+            });
         }
 
     }

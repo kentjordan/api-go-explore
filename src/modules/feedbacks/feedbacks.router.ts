@@ -30,7 +30,7 @@ router.delete('/user',
     userFeedback.deleteUserFeedbackById
 );
 
-router.get('/place/:id',
+router.get('/place/:place_id',
     validateParams<IPlaceID>(placeId),
     placeFeedback.getPlaceFeedbacksById
 );
