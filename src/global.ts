@@ -28,7 +28,7 @@ if (process.env.NODE_ENV.trim() === 'development') {
     }
 
     global.frontend = {
-        urls: [`*`]
+        urls: '*'
     }
 
 }
