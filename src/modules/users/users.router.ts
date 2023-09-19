@@ -13,7 +13,7 @@ router.post('/',
     service.createUser
 );
 
-router.get('/:id',
+router.get('/:user_id',
     jwtAuth,
     validateParams<IUserID>(UserValidator.userId),
     service.getUserById
@@ -23,14 +23,14 @@ router.get('/',
     service.getUsers
 );
 
-router.put('/:id',
+router.put('/:user_id',
     jwtAuth,
     validateParams<IUserID>(UserValidator.userId),
     validateBody<IUserUpdateInput>(UserValidator.updateUser),
     service.updateUser
 );
 
-router.delete('/:id',
+router.delete('/:user_id',
     jwtAuth,
     validateParams<IUserID>(UserValidator.userId),
     service.deleteUser
