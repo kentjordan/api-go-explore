@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { IUserCreateInput, IUserID, IUserUpdateInput } from "~/@types/users";
 import * as UserModels from "~/models/users";
-import { ExtractReqBody, ExtractReqParams } from "~/utils/request.util";
+import { ExtractReqBody, ExtractReqParams, ExtractReqQuery } from "~/utils/request.util";
 import { IRequestCustomBody, IRequestCustomParams, IRequestCustomQuery } from "~/@types/request";
+import { userRoleQuery } from "~/validators/users";
 
 export default class UsersService {
 
@@ -36,12 +37,31 @@ export default class UsersService {
 
     }
 
-    async getUsers(req: Request, res: Response, next: NextFunction) {
+    async getUsers(req: IRequestCustomQuery<{ role: 'ADMIN' | 'REGULAR' }>, res: Response, next: NextFunction) {
 
-        const users = await UserModels.getUsers(next);
+        const query = ExtractReqQuery<{ role: 'ADMIN' | 'REGULAR' }>(req);
+
+        if (!query.role) {
+            const users = await UserModels.getUsersByRole('REGULAR', next);
+
+            if (users) {
+                res.status(200).json([...users]);
+                return;
+            }
+        }
+
+        try {
+            userRoleQuery.parse(query);
+        } catch (error: unknown) {
+            next(error);
+            return;
+        }
+
+        const users = await UserModels.getUsersByRole(query.role, next);
 
         if (users) {
             res.status(200).json([...users]);
+            return;
         }
 
     }

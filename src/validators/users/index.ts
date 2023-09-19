@@ -29,8 +29,13 @@ const updateUser = z.object({
     current_barangay: z.string().min(1).optional()
 }).strict();
 
+const userRoleQuery = z.object({
+    role: z.enum(['ADMIN', 'REGULAR'])
+}).strict();
+
 export {
     userId,
     createUser,
-    updateUser
+    updateUser,
+    userRoleQuery
 }

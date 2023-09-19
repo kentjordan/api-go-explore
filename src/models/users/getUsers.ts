@@ -2,7 +2,7 @@ import { NextFunction } from "express";
 
 async function getUsers(next: NextFunction) {
     try {
-        return await prismaClient.user.findMany({
+        const user = await prismaClient.user.findMany({
             select: {
                 id: true,
                 first_name: true,
@@ -12,9 +12,18 @@ async function getUsers(next: NextFunction) {
                 from_country: true,
                 current_barangay: true,
                 current_city: true,
-                current_province: true
+                current_province: true,
+                created_at: true,
+                updated_at: true,
+                gender: true,
             }
         });
+
+        return user.map((e, i) => ({
+            ...e,
+            password: '********'
+        }));
+
     } catch (error: unknown) {
         next(error);
     }
