@@ -25,7 +25,7 @@ CREATE TABLE "User"(
     updated_at TIMESTAMP,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    gender SMALLINT NOT NULL,
+    gender VARCHAR(6) NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     role ROLE DEFAULT 'REGULAR',

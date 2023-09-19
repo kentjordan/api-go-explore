@@ -9,7 +9,7 @@ const createUser = z.object({
     last_name: z.string().min(1),
     email: z.string().email(),
     password: z.string().min(8),
-    gender: z.number(),
+    gender: z.string().min(4),
     role: z.enum(['ADMIN', 'REGULAR']),
     from_country: z.string().min(1),
     current_province: z.string().min(1),
