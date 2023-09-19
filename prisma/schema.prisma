@@ -99,6 +99,7 @@ model User {
   current_province String
   current_city     String
   current_barangay String
+  profile_photo    String?
   Feedback         Feedback[]
   Itinerary        Itinerary[]
   LoggedInHistory  LoggedInHistory[]

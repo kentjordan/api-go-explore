@@ -32,7 +32,8 @@ CREATE TABLE "User"(
     from_country TEXT NOT NULL,
     current_province TEXT NOT NULL,
     current_city TEXT NOT NULL,
-    current_barangay TEXT NOT NULL
+    current_barangay TEXT NOT NULL,
+    profile_photo TEXT
 );
 
 CREATE TABLE "Place"(
