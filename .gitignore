@@ -2,8 +2,8 @@
 node_modules
 dist
 
-uploaded_files/images/*
-uploaded_files/others/*
+uploaded_files/public/images/*
+uploaded_files/public/others/*
 
 # Files
 .env
