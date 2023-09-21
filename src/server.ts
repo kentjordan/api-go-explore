@@ -44,6 +44,9 @@ server.use(helmet());
 server.use(json());
 server.use(jwtSetup.initialize());
 
+// Static files
+server.use('/public/images', express.static(uploadedFilesPath.images));
+
 // End-points
 server.use('/auth', authRouter);
 server.use('/itineraries', itinerariesRouter);

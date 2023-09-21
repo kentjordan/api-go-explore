@@ -4,14 +4,15 @@ import path from 'path'
 global.prismaClient = new PrismaClient();
 
 global.uploadedFilesPath = {
-    images: path.join(process.cwd(), '/uploaded_files/images'),
-    others: path.join(process.cwd(), '/uploaded_files/others')
+    images: path.join(process.cwd(), '/uploaded_files/public/images'),
+    others: path.join(process.cwd(), '/uploaded_files/public/others')
 }
 
 if (process.env.NODE_ENV.trim() === 'production') {
 
     global.api = {
-        url: `https://${process.env.API_HOST}`,
+        http_url: `http://${process.env.API_HOST}`,
+        https_url: `https://${process.env.API_HOST}`
     }
 
     global.frontend = {
@@ -24,7 +25,8 @@ if (process.env.NODE_ENV.trim() === 'production') {
 if (process.env.NODE_ENV.trim() === 'development') {
 
     global.api = {
-        url: `https://${process.env.API_HOST}:${process.env.API_PORT}`
+        http_url: `http://${process.env.API_HOST}:${process.env.API_PORT}`,
+        https_url: `https://${process.env.API_HOST}:${process.env.API_PORT}`
     }
 
     global.frontend = {

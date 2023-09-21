@@ -9,10 +9,10 @@ export default class ImagesService {
     async uploadImage(req: Request, res: Response, next: NextFunction) {
 
         const img_filename = req.file?.filename;
-        const img_url = `${global.api.url}/images/${img_filename}`;
 
         res.status(201).json({
-            img_url,
+            http_img_url: `${global.api.http_url}/public/images/${img_filename}`,
+            https_img_url: `${global.api.https_url}/public/images/${img_filename}`
         });
 
     }

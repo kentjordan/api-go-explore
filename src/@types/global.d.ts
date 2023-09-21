@@ -16,7 +16,8 @@ export declare global {
     }
     var api: {
         protocol?: 'http' | 'https';
-        url?: string;
+        http_url?: string;
+        https_url?: string;
     }
 
     namespace Express {
