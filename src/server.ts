@@ -45,7 +45,12 @@ server.use(json());
 server.use(jwtSetup.initialize());
 
 // Static files
-server.use('/public/images', express.static(uploadedFilesPath.images));
+server.use('/public/images', express.static(uploadedFilesPath.images, {
+    setHeaders(res, path, stat) {
+        res.setHeader('Content-Type', 'image/png')
+        res.setHeader("Content-Disposition", "inline;");
+    },
+}));
 
 // End-points
 server.use('/auth', authRouter);
