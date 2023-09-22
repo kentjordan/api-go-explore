@@ -40,7 +40,9 @@ server.use(cors({
 
 server.use(accessLogger());
 server.use(errorLogger());
-server.use(helmet({ contentSecurityPolicy: false }));
+server.use(helmet({
+    crossOriginResourcePolicy: false,
+}));
 server.use(json());
 server.use(jwtSetup.initialize());
 
