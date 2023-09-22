@@ -13,6 +13,10 @@ router.post('/',
     LearnMoreService.createLearnMore
 );
 
+router.get('/',
+    LearnMoreService.getAllLearnMore
+);
+
 router.get('/:learnMore_id',
     validateParams<ILearnMoreIDInput>(LearnMoreValidators.learnMoreId),
     LearnMoreService.getLearnMoreById

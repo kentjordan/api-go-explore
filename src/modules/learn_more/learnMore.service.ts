@@ -19,6 +19,13 @@ const createLearnMore = async (req: Request, res: Response, next: NextFunction) 
 }
 
 const getAllLearnMore = async (req: Request, res: Response, next: NextFunction) => {
+
+    const learnMore = await LearnMoreModels.getAllLearnMore(next);
+
+    if (learnMore) {
+        res.status(200).json([...learnMore]);
+    }
+
 }
 
 const getLearnMoreById = async (req: IRequestCustomParams<ILearnMoreIDInput>, res: Response, next: NextFunction) => {
@@ -64,5 +71,6 @@ export {
     createLearnMore,
     getLearnMoreById,
     updateLearnMoreById,
-    deleteLearnMoreById
+    deleteLearnMoreById,
+    getAllLearnMore
 }
