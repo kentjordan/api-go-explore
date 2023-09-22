@@ -40,7 +40,7 @@ server.use(cors({
 
 server.use(accessLogger());
 server.use(errorLogger());
-server.use(helmet());
+server.use(helmet({ contentSecurityPolicy: false }));
 server.use(json());
 server.use(jwtSetup.initialize());
 
