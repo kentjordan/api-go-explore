@@ -85,6 +85,7 @@ export default function error(err: unknown, req: Request, res: Response, next: N
         console.log('error.ts', err);
     }
 
+    console.log(err);
     res.status(500).json({ message: 'Internal server error.' });
 
 }
