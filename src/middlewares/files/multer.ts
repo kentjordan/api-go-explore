@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import fs from 'node:fs';
 
 const uploadImage = multer({
+    limits: {
+        fileSize: 1e+7, // 50MB
+    },
     storage: diskStorage({
         destination(req, file, callback) {
 
