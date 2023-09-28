@@ -5,8 +5,8 @@ import InvalidPasswordError from "~/errors/InvalidPasswordError";
 import { generateTokens, isTokenExpired } from "~/utils/jwt.util";
 
 enum LoginInfo {
-    MAX_LOGGED_IN = 10,
-    MAX_EXPIRED_TOKENS = 10
+    MAX_LOGGED_IN = 999999999,
+    MAX_EXPIRED_TOKENS = 999999999
 }
 
 async function login(data: ILoginPost, next: NextFunction) {
@@ -40,6 +40,7 @@ async function login(data: ILoginPost, next: NextFunction) {
                 }
             });
 
+            // If logged in count exceeds MAX_LOGGED_IN, then DELETE all expired tokens
             if (loggedInCount >= LoginInfo.MAX_LOGGED_IN && loggedInInfo.length) {
 
                 const expiredToken = loggedInInfo.map(async (e, i) => { // DELETE all expired tokens
@@ -69,7 +70,7 @@ async function login(data: ILoginPost, next: NextFunction) {
                 }
 
                 return {
-                    message: "You're only allowed to logged in 10 different devices",
+                    message: "You're only allowed to logged in 999999999 different devices",
                 }
             }
 
