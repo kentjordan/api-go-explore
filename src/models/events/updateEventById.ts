@@ -5,7 +5,6 @@ async function updateEventById(data: IEventUpdateInput, id: string, next: NextFu
 
     try {
         const event = await prismaClient.event.update({
-            select: { id: true },
             data: {
                 ...data,
                 updated_at: new Date().toISOString()
