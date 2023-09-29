@@ -12,8 +12,8 @@ export default class ImagesService {
 
         res.status(201).json({
             id: img_filename,
-            http_img_url: `${global.api.http_url}/public/images/${img_filename}`,
-            https_img_url: `${global.api.https_url}/public/images/${img_filename}`
+            http_img_url: `${global.api.http_url}/api/public/images/${img_filename}`,
+            https_img_url: `${global.api.https_url}/api/public/images/${img_filename}`
         });
 
     }
