@@ -13,7 +13,11 @@ async function getUserById(id: string, next: NextFunction) {
                 from_country: true,
                 current_barangay: true,
                 current_city: true,
-                current_province: true
+                current_province: true,
+                profile_photo: true,
+                updated_at: true,
+                gender: true,
+                created_at: true
             },
             where: { id }
         });
