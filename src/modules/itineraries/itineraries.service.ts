@@ -76,6 +76,13 @@ export default class ItinerariesService {
 
     async updateItemById(req: Request, res: Response, next: NextFunction) { }
 
+    async getAllItinerary(req: Request, res: Response, next: NextFunction) {
 
+        const allItinerary = await ItineraryModels.getAllItinerary(next);
+
+        if (allItinerary) {
+            res.status(200).json([...allItinerary]);
+        }
+    }
 
 }

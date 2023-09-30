@@ -40,4 +40,9 @@ router.delete('/item/:id',
     service.deleteItemById
 );
 
+router.get('/',
+    jwtAuth,
+    service.getAllItinerary
+);
+
 export default router;
