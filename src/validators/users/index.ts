@@ -21,8 +21,8 @@ const createUser = z.object({
 const updateUser = z.object({
     first_name: z.string().min(1).optional(),
     last_name: z.string().min(1).optional(),
-    email: z.string().email().min(1).optional(),
-    password: z.string().min(1).optional(),
+    password: z.string().min(8).optional(),
+    gender: z.string().min(4).optional(),
     role: z.enum(['ADMIN', 'REGULAR']).optional(),
     from_country: z.string().min(1).optional(),
     current_province: z.string().min(1).optional(),
