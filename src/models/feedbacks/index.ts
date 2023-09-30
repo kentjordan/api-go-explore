@@ -8,6 +8,8 @@ import getUserFeedbacksById from "./getUserFeedbacksById";
 import getPlaceFeedbacksByAggregation from './getPlaceFeedBacksByAggregation'
 import getPlaceAverageFeedback from './getPlaceAverageFeedback';
 
+import getAllFeedbacks from './getAllFeedbacks';
+
 export {
     createUserFeedbackById,
     deleteUserFeedbackById,
@@ -15,5 +17,6 @@ export {
     getPlaceFeedbacksById,
     getUserFeedbacksById,
     getPlaceFeedbacksByAggregation,
-    getPlaceAverageFeedback
+    getPlaceAverageFeedback,
+    getAllFeedbacks
 }

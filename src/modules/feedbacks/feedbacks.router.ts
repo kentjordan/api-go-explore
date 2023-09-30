@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PlaceFeedbackService, UserFeedbackService } from "./feedbacks.service";
+import { PlaceFeedbackService, UserFeedbackService, getAllFeedbacks } from "./feedbacks.service";
 import { jwtAuth } from "~/middlewares/auth/jwtAuth";
 import { validateBody, validateParams, validateQuery } from "~/middlewares/validators/request.val";
 import { IUserFeedbackCreateInput } from "~/@types/modules/feedbacks";
@@ -38,6 +38,10 @@ router.get('/place/:place_id',
 router.get('/user/:user_id',
     jwtAuth,
     userFeedback.getUserFeedbacksById
+);
+
+router.get('/',
+    getAllFeedbacks
 );
 
 export default router;

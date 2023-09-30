@@ -131,7 +131,16 @@ class UserFeedbackService {
     }
 }
 
+const getAllFeedbacks = async (req: Request, res: Response, next: NextFunction) => {
+    const allFeedbacks = await FeedbackModels.getAllFeedbacks(next);
+
+    if (allFeedbacks) {
+        res.status(200).json([...allFeedbacks]);
+    }
+}
+
 export {
     UserFeedbackService,
-    PlaceFeedbackService
+    PlaceFeedbackService,
+    getAllFeedbacks
 }
