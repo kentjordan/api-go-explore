@@ -84,6 +84,17 @@ CREATE TABLE "Itinerary"(
     CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
 );
 
+CREATE TABLE "ItineraryBuilder"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    place_name TEXT NOT NULL,
+    event_date TIMESTAMP NOT NULL,
+    event_color ,
+    event_icon ,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
+);
+
 CREATE TABLE "Feedback"(
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
