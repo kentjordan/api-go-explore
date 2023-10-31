@@ -90,9 +90,10 @@ CREATE TABLE "ItineraryBuilder"(
     updated_at TIMESTAMP,
     place_name TEXT NOT NULL,
     event_date TIMESTAMP NOT NULL,
-    event_color ,
-    event_icon ,
-    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id),
+    event_color TEXT NOT NULL,
+    event_icon TEXT NOT NULL,
+    user_id UUID NOT NULL,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id)
 );
 
 CREATE TABLE "Feedback"(
