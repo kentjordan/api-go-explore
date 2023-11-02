@@ -1,6 +1,5 @@
 -- Create user 'goexplore' with SUPERUSER privilege
-CREATE USER goexplore WITH LOGIN SUPERUSER;
-ALTER USER goexplore WITH PASSWORD '@goexplore++';
+ALTER USER postgres WITH PASSWORD '@goexplore++';
 
 -- Create Database
 CREATE DATABASE "GoExplore";
