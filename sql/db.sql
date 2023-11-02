@@ -91,6 +91,7 @@ CREATE TABLE "ItineraryBuilder"(
     event_date TIMESTAMP NOT NULL,
     event_color TEXT NOT NULL,
     event_icon TEXT NOT NULL,
+    notes TEXT,
     user_id UUID NOT NULL,
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "User"(id)
 );
