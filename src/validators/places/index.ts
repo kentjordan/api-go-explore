@@ -16,7 +16,7 @@ const createPlace = z.object({
     contact: z.array(z.string().min(1)),
     province: z.string(),
     city: z.string(),
-    barangay: z.string()
+    barangay: z.string().optional()
 });
 
 const updatePlace = z.object({
