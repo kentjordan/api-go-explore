@@ -14,7 +14,6 @@ const createUser = z.object({
     from_country: z.string().min(1),
     current_province: z.string().min(1),
     current_city: z.string().min(1),
-    current_barangay: z.string().min(1),
     profile_photo: z.string().optional()
 }).strict();
 
@@ -27,7 +26,6 @@ const updateUser = z.object({
     from_country: z.string().min(1).optional(),
     current_province: z.string().min(1).optional(),
     current_city: z.string().min(1).optional(),
-    current_barangay: z.string().min(1).optional(),
     profile_photo: z.string().optional()
 }).strict();
 

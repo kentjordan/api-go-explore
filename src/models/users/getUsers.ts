@@ -10,7 +10,6 @@ async function getUsers(next: NextFunction) {
                 email: true,
                 role: true,
                 from_country: true,
-                current_barangay: true,
                 current_city: true,
                 current_province: true,
                 created_at: true,

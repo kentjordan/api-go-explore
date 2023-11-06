@@ -16,7 +16,6 @@ async function getSearchedUsers(q: string, next: NextFunction) {
                 email: true,
                 role: true,
                 from_country: true,
-                current_barangay: true,
                 current_city: true,
                 current_province: true
             },
@@ -34,11 +33,6 @@ async function getSearchedUsers(q: string, next: NextFunction) {
                     },
                     {
                         email: {
-                            search
-                        }
-                    },
-                    {
-                        current_barangay: {
                             search
                         }
                     },
