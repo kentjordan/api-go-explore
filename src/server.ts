@@ -44,7 +44,7 @@ server.use(errorLogger());
 server.use(helmet({
     crossOriginResourcePolicy: false,
 }));
-server.use(json());
+server.use(json({ limit: '100mb' }));
 server.use(jwtSetup.initialize());
 
 // Static files
