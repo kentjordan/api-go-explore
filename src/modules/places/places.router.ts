@@ -20,7 +20,6 @@ router.get('/',
 );
 
 router.get('/:place_id',
-    jwtAuth,
     validateParams<IPlaceID>(PlaceValidator.placeId),
     service.getPlaceById
 );
