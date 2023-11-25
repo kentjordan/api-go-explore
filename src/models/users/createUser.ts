@@ -11,7 +11,8 @@ async function createUser(data: IUserCreateInput, next: NextFunction) {
 
         const user = await prismaClient.user.create({
             select: {
-                id: true
+                id: true,
+                role: true
             },
             data: {
                 ...data,

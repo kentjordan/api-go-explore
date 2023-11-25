@@ -13,14 +13,18 @@ async function login(data: ILoginPost, next: NextFunction) {
 
     try {
         const db_res = await prismaClient.user.findFirstOrThrow({
-            select: { id: true, password: true },
+            select: {
+                id: true,
+                password: true,
+                role: true
+            },
             where: { email: data.email }
         });
 
         const isPwdMatched = await verify(db_res.password, data.password);
 
         if (isPwdMatched) {
-            const tokens = await generateTokens({ id: db_res.id });
+            const tokens = await generateTokens({ id: db_res.id, role: db_res.role });
 
             const loggedInCount = await prismaClient.loggedInHistory.count({ // COUNT the logged in info of the user by its id
                 where: {

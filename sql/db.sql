@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS "User";
 DROP TYPE IF EXISTS role;
 
 -- Custom types
-CREATE TYPE ROLE as ENUM ('ADMIN', 'REGULAR');
+CREATE TYPE ROLE as ENUM ('SUPER-ADMIN', 'ADMIN', 'REGULAR');
 
 -- Create database schema
 CREATE TABLE "User"(

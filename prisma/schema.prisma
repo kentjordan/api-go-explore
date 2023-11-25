@@ -185,4 +185,5 @@ model ItineraryBuilder {
 enum role {
   ADMIN
   REGULAR
+  SUPER_ADMIN @map("SUPER-ADMIN")
 }

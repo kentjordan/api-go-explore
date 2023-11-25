@@ -10,7 +10,7 @@ const createUser = z.object({
     email: z.string().email(),
     password: z.string().min(8),
     gender: z.string().min(4),
-    role: z.enum(['ADMIN', 'REGULAR']),
+    role: z.enum(['SUPER_ADMIN', 'ADMIN', 'REGULAR']),
     from_country: z.string().min(1),
     current_province: z.string().min(1),
     current_city: z.string().min(1),
@@ -22,7 +22,7 @@ const updateUser = z.object({
     last_name: z.string().min(1).optional(),
     password: z.string().min(8).optional(),
     gender: z.string().min(4).optional(),
-    role: z.enum(['ADMIN', 'REGULAR']).optional(),
+    role: z.enum(['SUPER_ADMIN', 'ADMIN', 'REGULAR']).optional(),
     from_country: z.string().min(1).optional(),
     current_province: z.string().min(1).optional(),
     current_city: z.string().min(1).optional(),
@@ -30,7 +30,7 @@ const updateUser = z.object({
 }).strict();
 
 const userRoleQuery = z.object({
-    role: z.enum(['ADMIN', 'REGULAR'])
+    role: z.enum(['SUPER_ADMIN', 'ADMIN', 'REGULAR'])
 }).strict();
 
 export {
