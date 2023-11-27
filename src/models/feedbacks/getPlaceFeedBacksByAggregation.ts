@@ -7,10 +7,12 @@ const getPlaceFeedbacksByAggregation = async (place_id: string, next: NextFuncti
 
         for (let i = 1; i <= 5; i++) {
             const rating = await prismaClient.$queryRaw`
-                            SELECT *
-                            FROM "Feedback"
+                            SELECT F.id, F.rating, F.comment, F.place_id, F.user_id, U.first_name, U.last_name, U.from_country, U.current_city, U.current_province, U.profile_photo
+                            FROM "Feedback" AS F
+                            JOIN "User" AS U
+                            ON U.id = F.user_id
                             WHERE rating = ${i} AND place_id = ${place_id}::UUID
-                            ORDER BY created_at DESC;
+                            ORDER BY F.created_at DESC;
                             `;
 
             feedbacksByRatings.push(rating);
