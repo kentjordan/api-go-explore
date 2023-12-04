@@ -76,7 +76,7 @@ model Place {
   title        String?
   description  String?
   photos       String[]
-  contact      String[]       @default([])
+  contact      String[]
   province     String?
   city         String?
   barangay     String?
@@ -183,7 +183,7 @@ model ItineraryBuilder {
 }
 
 enum role {
+  SUPER_ADMIN @map("SUPER-ADMIN")
   ADMIN
   REGULAR
-  SUPER_ADMIN @map("SUPER-ADMIN")
 }
