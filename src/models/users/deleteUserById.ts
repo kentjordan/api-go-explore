@@ -20,6 +20,10 @@ async function deleteUserById(id: string, next: NextFunction) {
             where: { user_id: id }
         });
 
+        await prismaClient.preferences.deleteMany({
+            where: { user_id: id }
+        });
+
         const user = await prismaClient.user.delete({
             select: { id: true },
             where: { id }
