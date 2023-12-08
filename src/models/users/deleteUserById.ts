@@ -4,6 +4,10 @@ async function deleteUserById(id: string, next: NextFunction) {
 
     try {
 
+        await prismaClient.itineraryBuilder.deleteMany({
+            where: { user_id: id }
+        });
+
         await prismaClient.itinerary.deleteMany({
             where: { user_id: id }
         });
