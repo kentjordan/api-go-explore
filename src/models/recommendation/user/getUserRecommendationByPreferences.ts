@@ -103,7 +103,7 @@ const getUserRecommendationByPreferences = async (user_id: string, next: NextFun
                     (SELECT LOWER(preferenced_categories) AS preferenced_categories
                     FROM
                         (SELECT UNNEST(preferenced_categories) AS preferenced_categories
-                        FROM "Preferences" WHERE user_id = ${user_id}))::UUID
+                        FROM "Preferences" WHERE user_id = ${user_id}::UUID))
                 ORDER BY visited_count DESC
                 LIMIT 10;
         `;
