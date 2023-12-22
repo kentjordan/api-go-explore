@@ -22,15 +22,16 @@ model Event {
 }
 
 model Feedback {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-  updated_at DateTime? @db.Timestamp(6)
-  rating     Float?
-  comment    String?
-  user_id    String?   @db.Uuid
-  place_id   String?   @db.Uuid
-  Place      Place?    @relation(fields: [place_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_place_id")
-  User       User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at   DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime?      @db.Timestamp(6)
+  rating       Float?
+  comment      String?
+  user_id      String?        @db.Uuid
+  place_id     String?        @db.Uuid
+  Place        Place?         @relation(fields: [place_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_place_id")
+  User         User?          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+  ReplyComment ReplyComment[]
 }
 
 model Footer {
@@ -104,6 +105,7 @@ model User {
   ItineraryBuilder ItineraryBuilder[]
   LoggedInHistory  LoggedInHistory[]
   Preferences      Preferences?
+  ReplyComment     ReplyComment[]
   VisitedPlace     VisitedPlace[]
 }
 
@@ -180,6 +182,17 @@ model ItineraryBuilder {
   notes       String?
   user_id     String    @db.Uuid
   User        User      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+}
+
+model ReplyComment {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  updated_at    DateTime? @db.Timestamp(6)
+  reply_comment String?
+  user_id       String    @db.Uuid
+  feedback_id   String    @db.Uuid
+  Feedback      Feedback  @relation(fields: [feedback_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_feedback_id")
+  User          User      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
 }
 
 enum role {

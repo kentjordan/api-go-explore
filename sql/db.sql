@@ -182,3 +182,18 @@ CREATE TABLE "WhereToGo"(
     title TEXT,
     description TEXT
 );
+
+CREATE TABLE "ReplyComment"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    reply_comment TEXT,
+    user_id UUID NOT NULL,
+    feedback_id UUID NOT NULL,
+    CONSTRAINT fk_user_id
+        FOREIGN KEY (user_id)
+        REFERENCES "User"(id),
+    CONSTRAINT fk_feedback_id
+        FOREIGN KEY (feedback_id)
+        REFERENCES "Feedback"(id)
+);

@@ -14,6 +14,7 @@ import { IUserID } from "~/@types/users";
 import * as FeedbackModels from '~/models/feedbacks'
 
 import { ExtractReqBody, ExtractReqParams, ExtractReqUser } from "~/utils/request.util";
+import { ICreateFeedbackReply } from "~/validators/feedbacks/replies";
 
 class PlaceFeedbackService {
 
@@ -139,8 +140,40 @@ const getAllFeedbacks = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+const getFeedbackReplies = async (req: Request<IFeedbackID>, res: Response, next: NextFunction) => {
+
+    const { feedback_id } = ExtractReqParams<IFeedbackID>(req);
+
+    const replies = await FeedbackModels.getFeedbackReplies(feedback_id);
+
+    if (replies) {
+        res.status(200).json([...replies]);
+    }
+
+}
+
+const createFeedbackReply = async (req: Request<IFeedbackID>, res: Response, next: NextFunction) => {
+
+    const { feedback_id } = ExtractReqParams<IFeedbackID>(req);
+    const { reply_comment } = ExtractReqBody<ICreateFeedbackReply>(req);
+    const { id } = ExtractReqUser(req);
+
+    const createdFeedbackReply = await FeedbackModels.createFeedbackReply({
+        feedback_id,
+        reply_comment,
+        user_id: id
+    }, next);
+
+    if (createdFeedbackReply) {
+        res.status(200).json({ ...createdFeedbackReply });
+    }
+
+}
+
 export {
     UserFeedbackService,
     PlaceFeedbackService,
-    getAllFeedbacks
+    getAllFeedbacks,
+    getFeedbackReplies,
+    createFeedbackReply
 }

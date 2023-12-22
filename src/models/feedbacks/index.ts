@@ -9,6 +9,8 @@ import getPlaceFeedbacksByAggregation from './getPlaceFeedBacksByAggregation'
 import getPlaceAverageFeedback from './getPlaceAverageFeedback';
 
 import getAllFeedbacks from './getAllFeedbacks';
+import getFeedbackReplies from "./replies/getFeedbackReplies";
+import createFeedbackReply from "./replies/createFeedbackReply";
 
 export {
     createUserFeedbackById,
@@ -18,5 +20,7 @@ export {
     getUserFeedbacksById,
     getPlaceFeedbacksByAggregation,
     getPlaceAverageFeedback,
-    getAllFeedbacks
+    getAllFeedbacks,
+    getFeedbackReplies,
+    createFeedbackReply
 }
