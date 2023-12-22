@@ -92,7 +92,7 @@ const getUserRecommendationByPreferences = async (user_id: string, next: NextFun
 
     try {
 
-        return await prismaClient.$queryRaw < Array<IUserRecommendationByItsPreferences>>`
+        return await prismaClient.$queryRaw<Array<IUserRecommendationByItsPreferences>>`
                 SELECT P.title, P.category, P.photos, P.description, P.province, P.city, TV.visited_count
                 FROM "Place" AS P
                 INNER JOIN 
