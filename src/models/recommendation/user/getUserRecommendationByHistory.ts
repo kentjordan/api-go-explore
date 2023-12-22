@@ -81,18 +81,37 @@ const recommendationByPopularity = async (user_id: string) => {
 
 }
 
+type IUserRecommendationByItsHistory = Array<{
+    title: string,
+    category: string,
+    photos: Array<string>,
+    description: string,
+    province: string,
+    city: string,
+    visited_count: number
+}>
+
 const getUserRecommendationByHistory = async (user_id: string, next: NextFunction) => {
 
     try {
-
-        const visited_count = await getVisitedPlacesCount(next);
-
-        if (visited_count as number >= 10) {
-            return await recommendationByPopularity(user_id);
-        }
-
-        return await recommendationByLatestAdded(user_id);
-
+        return await prismaClient.$queryRaw<IUserRecommendationByItsHistory>`
+                SELECT P.title, P.category, P.photos, P.description, P.province, P.city, UVP2.visited_count
+                FROM "Place" AS P
+                INNER JOIN
+                    (SELECT VP.place_id, VP.visited_count
+                    FROM 
+                        (SELECT place_id, COUNT(place_id) AS visited_count
+                        FROM "VisitedPlace"
+                        GROUP BY place_id) AS VP
+                    INNER JOIN
+                        (SELECT user_id, place_id 
+                        FROM "VisitedPlace"
+                        WHERE user_id = ${user_id}::UUID
+                        GROUP BY user_id, place_id) AS UVP
+                    ON UVP.place_id = VP.place_id
+                    ORDER BY VP.visited_count DESC) AS UVP2
+                ON UVP2.place_id = P.id
+        `;
     } catch (error: unknown) {
         next(error);
     }
