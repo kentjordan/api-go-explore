@@ -10,6 +10,7 @@ async function updatePlaceById(id: string, data: IPlaceUpdateInput, next: NextFu
             where: { id },
             data: {
                 ...data,
+                category: data.category?.toLowerCase(),
                 updated_at: new Date().toISOString()
             }
         });
