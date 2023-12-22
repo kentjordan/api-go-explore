@@ -46,7 +46,11 @@ CREATE TABLE "Place"(
     contact TEXT[],
     province TEXT,
     city TEXT,
-    barangay TEXT
+    barangay TEXT,
+    season_id UUID DEFAULT NULL,
+    CONSTRAINT fk_season_id
+        FOREIGN KEY (season_id)
+        REFERENCES "Season"(id)
 );
 
 CREATE TABLE "VisitedPlace"(
@@ -196,4 +200,14 @@ CREATE TABLE "ReplyComment"(
     CONSTRAINT fk_feedback_id
         FOREIGN KEY (feedback_id)
         REFERENCES "Feedback"(id)
+);
+
+CREATE TABLE "Season"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    name VARCHAR(255),
+    description TEXT,
+    month VARCHAR(128),
+    day INT
 );

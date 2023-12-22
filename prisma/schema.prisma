@@ -81,8 +81,10 @@ model Place {
   province     String?
   city         String?
   barangay     String?
+  season_id    String?        @db.Uuid
   Feedback     Feedback[]
   Itinerary    Itinerary[]
+  Season       Season?        @relation(fields: [season_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_season_id")
   VisitedPlace VisitedPlace[]
 }
 
@@ -195,8 +197,19 @@ model ReplyComment {
   User          User      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
 }
 
+model Season {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @db.Timestamp(6)
+  name        String?   @db.VarChar(255)
+  description String?
+  from_date   DateTime  @db.Date
+  to_date     DateTime  @db.Date
+  Place       Place[]
+}
+
 enum role {
-  SUPER_ADMIN @map("SUPER-ADMIN")
   ADMIN
   REGULAR
+  SUPER_ADMIN @map("SUPER-ADMIN")
 }

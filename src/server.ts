@@ -27,6 +27,8 @@ import { default as recommendationRouter } from '~/modules/recommendation/recomm
 import { default as whereToGoRouter } from '~/modules/where-to-go/whereToGo.router';
 import { default as whereToStayRouter } from '~/modules/where-to-stay/whereToStay.router';
 import { default as itineraryBuilderRouter } from '~/modules/itinerary_builder/itineraryBuilder.router';
+import { default as seasonsRouter } from '~/modules/seasons/seasons.router';
+
 
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
@@ -82,6 +84,7 @@ server.use('/recommendation', recommendationRouter);
 server.use('/where-to-go', whereToGoRouter);
 server.use('/where-to-stay', whereToStayRouter);
 server.use('/itinerary-builder', itineraryBuilderRouter);
+server.use('/seasons', seasonsRouter);
 
 server.use(error);
 
