@@ -31,7 +31,7 @@ const createPreferences = async (input: IPreferencesCreateInput & { user_id: str
                 preferenced_categories: true
             },
             data: {
-                preferenced_categories: input.preferenced_categories,
+                preferenced_categories: input.preferenced_categories?.map((e) => e.toLowerCase()),
                 user_id: input.user_id
             }
         });
