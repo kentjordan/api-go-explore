@@ -78,15 +78,36 @@ const recommendationByPopularity = async (user_id: string) => {
     }));
 }
 
+type IUserRecommendationByPreferences = Array<{
+    title: string,
+    category: string,
+    photos: Array<string>,
+    description: string,
+    province: string,
+    city: string,
+    visited_count: number
+}>
+
 const getUserRecommendationByPreferences = async (user_id: string, next: NextFunction) => {
 
     try {
-        const visited_count = await getVisitedPlacesCount(next);
 
-        if (visited_count as number >= 10) {
-            return await recommendationByPopularity(user_id);
-        }
-        return await recommendationByLatestAdded(user_id);
+        return await prismaClient.$queryRaw < Array<IUserRecommendationByPreferences>>`
+                SELECT P.title, P.category, P.photos, P.description, P.province, P.city, TV.visited_count
+                FROM "Place" AS P
+                INNER JOIN 
+                    (SELECT place_id, COUNT(place_id) AS visited_count FROM "VisitedPlace"
+                    GROUP BY place_id) AS TV
+                ON TV.place_id = P.id
+                WHERE P.category IN 
+                    (SELECT LOWER(preferenced_categories) AS preferenced_categories
+                    FROM
+                        (SELECT UNNEST(preferenced_categories) AS preferenced_categories
+                        FROM "Preferences" WHERE user_id = ${user_id}))
+                ORDER BY visited_count DESC
+                LIMIT 10;
+        `;
+
     } catch (error: unknown) {
         next(error);
     }

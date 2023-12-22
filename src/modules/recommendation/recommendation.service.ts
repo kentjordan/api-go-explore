@@ -21,7 +21,7 @@ const getUserRecommendationByPreferences = async (req: Request, res: Response, n
     const userRecommendations = await RecommendationModels.getUserRecommendationByPreferences(user_id, next);
 
     if (userRecommendations) {
-        res.status(200).json(userRecommendations);
+        res.status(200).json([...userRecommendations]);
     }
 
 }
