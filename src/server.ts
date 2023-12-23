@@ -28,6 +28,7 @@ import { default as whereToGoRouter } from '~/modules/where-to-go/whereToGo.rout
 import { default as whereToStayRouter } from '~/modules/where-to-stay/whereToStay.router';
 import { default as itineraryBuilderRouter } from '~/modules/itinerary_builder/itineraryBuilder.router';
 import { default as seasonsRouter } from '~/modules/seasons/seasons.router';
+import { default as newslettersRouter } from '~/modules/newsletter/newsletter.router';
 
 
 import error from '~/middlewares/error';
@@ -85,6 +86,7 @@ server.use('/where-to-go', whereToGoRouter);
 server.use('/where-to-stay', whereToStayRouter);
 server.use('/itinerary-builder', itineraryBuilderRouter);
 server.use('/seasons', seasonsRouter);
+server.use('/newsletters', newslettersRouter);
 
 server.use(error);
 

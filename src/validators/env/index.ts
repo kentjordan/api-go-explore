@@ -10,6 +10,8 @@ const processEnv = z.object({
     DATABASE_URL: z.string(),
     SECRET_KEY: z.string(),
     NODE_ENV: z.enum(['production', 'development']),
+    EMAIL_USER: z.string().email(),
+    EMAIL_PASS: z.string()
 });
 
 export {
