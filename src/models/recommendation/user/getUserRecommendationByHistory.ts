@@ -81,7 +81,8 @@ const recommendationByPopularity = async (user_id: string) => {
 
 }
 
-type IUserRecommendationByItsHistory = Array<{
+export type IUserRecommendationByItsHistory = Array<{
+    id: string,
     title: string,
     category: string,
     photos: Array<string>,
@@ -90,12 +91,12 @@ type IUserRecommendationByItsHistory = Array<{
     city: string,
     visited_count: number
 }>
-
+// Most visited place based on user "history"
 const getUserRecommendationByHistory = async (user_id: string, next: NextFunction) => {
 
     try {
         return await prismaClient.$queryRaw<IUserRecommendationByItsHistory>`
-                SELECT P.title, P.category, P.photos, P.description, P.province, P.city, UVP2.visited_count
+                SELECT P.id, P.title, P.category, P.photos, P.description, P.province, P.city, UVP2.visited_count
                 FROM "Place" AS P
                 INNER JOIN
                     (SELECT VP.place_id, VP.visited_count

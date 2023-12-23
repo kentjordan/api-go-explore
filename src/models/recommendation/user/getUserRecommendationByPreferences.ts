@@ -78,7 +78,7 @@ const recommendationByPopularity = async (user_id: string) => {
     }));
 }
 
-type IUserRecommendationByItsPreferences = Array<{
+export type IUserRecommendationByItsPreferences = Array<{
     title: string,
     category: string,
     photos: Array<string>,
@@ -87,7 +87,7 @@ type IUserRecommendationByItsPreferences = Array<{
     city: string,
     visited_count: number
 }>
-
+// Most visited place based on user "preference"
 const getUserRecommendationByPreferences = async (user_id: string, next: NextFunction) => {
 
     try {
@@ -105,8 +105,7 @@ const getUserRecommendationByPreferences = async (user_id: string, next: NextFun
                         (SELECT UNNEST(preferenced_categories) AS preferenced_categories
                         FROM "Preferences" WHERE user_id = ${user_id}::UUID))
                 ORDER BY visited_count DESC
-                LIMIT 10;
-        `;
+                LIMIT 10`;
 
     } catch (error: unknown) {
         next(error);
