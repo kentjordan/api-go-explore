@@ -208,6 +208,6 @@ CREATE TABLE "Season"(
     updated_at TIMESTAMP,
     name VARCHAR(255),
     description TEXT,
-    month VARCHAR(128),
-    day INT
+    from_date DATE NOT NULL,
+    to_date DATE NOT NULL
 );
