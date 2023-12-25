@@ -26,7 +26,7 @@ const getEmailHTML = (mostRated: Array<any>, mostVisited: Array<any>, suggested:
         </ol>
         <p>Ready to embark on an unforgettable journey? Visit our website GO EXPLORE (goexplorebatangas.com) to plan your
             trip,
-            explore detailed itineraries, and make the most of your time in [Destination].</p>
+            explore detailed itineraries, and make the most of your time in Batangas.</p>
         <p>Don't miss out on the magic that awaits you in Batangas. Pack your bags and get ready for a travel experience
             like never
             before!</p>
