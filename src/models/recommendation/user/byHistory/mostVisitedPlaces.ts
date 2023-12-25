@@ -1,16 +1,7 @@
-type MostVisitedByUserHistory = Array<{
-    id: string,
-    title: string,
-    category: string,
-    photos: Array<string>,
-    description: string,
-    province: string,
-    city: string,
-    visited_count: number
-}>;
+import { IUserRecommendationByItsHistory } from "./models";
 
-const mostVisitedByHistory = async (user_id: string) => {
-    return await prismaClient.$queryRaw<MostVisitedByUserHistory>`
+export const mostVisitedPlacesByHistory = async (user_id: string, limit: number) => {
+    return await prismaClient.$queryRaw<IUserRecommendationByItsHistory>`
                 SELECT P.id, P.title, P.category, P.photos, P.description, P.province, P.city, UVP2.visited_count
                 FROM "Place" AS P
                 INNER JOIN
@@ -22,10 +13,11 @@ const mostVisitedByHistory = async (user_id: string) => {
                     INNER JOIN
                         (SELECT user_id, place_id 
                         FROM "VisitedPlace"
-                        WHERE user_id = 'ce91a506-b43d-4631-bb28-46b50381698d'::UUID
+                        WHERE user_id = ${user_id}::UUID
                         GROUP BY user_id, place_id) AS UVP
-                    ON UVP.place_id = VP.place_id) AS UVP2
+                    ON UVP.place_id = VP.place_id
+                    ORDER BY VP.visited_count DESC) AS UVP2
                 ON UVP2.place_id = P.id
-                ORDER BY UVP2.visited_count DESC
-                LIMIT 5`;
+                LIMIT ${limit}
+        `;
 }
