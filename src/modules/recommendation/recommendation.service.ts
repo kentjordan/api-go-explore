@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { ExtractReqUser } from "~/utils/request.util";
+import { ExtractReqParams, ExtractReqQuery, ExtractReqUser } from "~/utils/request.util";
 import * as RecommendationModels from "~/models/recommendation";
 
 const getPublicRecommendationPlaces = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,11 +14,14 @@ const getPublicRecommendationPlaces = async (req: Request, res: Response, next: 
 
 }
 
+type ITypeRecommendation = "most-visited" | "most-rated"
+
 const getUserRecommendationByPreferences = async (req: Request, res: Response, next: NextFunction) => {
 
     const { id: user_id } = ExtractReqUser(req);
+    const { type } = ExtractReqQuery(req);
 
-    const userRecommendations = await RecommendationModels.getUserRecommendationByPreferences(user_id, next);
+    const userRecommendations = await RecommendationModels.getUserRecommendationByPreferences(type as ITypeRecommendation, user_id, next);
 
     if (userRecommendations) {
         res.status(200).json([...userRecommendations]);
@@ -29,8 +32,9 @@ const getUserRecommendationByPreferences = async (req: Request, res: Response, n
 const getUserRecommendationByHistory = async (req: Request, res: Response, next: NextFunction) => {
 
     const { id: user_id } = ExtractReqUser(req);
+    const { type } = ExtractReqQuery(req);
 
-    const userRecommendations = await RecommendationModels.getUserRecommendationByHistory(user_id, next);
+    const userRecommendations = await RecommendationModels.getUserRecommendationByHistory(type as ITypeRecommendation, user_id, next);
 
     if (userRecommendations) {
         res.status(200).json(userRecommendations);
