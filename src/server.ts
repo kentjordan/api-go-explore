@@ -29,7 +29,7 @@ import { default as whereToStayRouter } from '~/modules/where-to-stay/whereToSta
 import { default as itineraryBuilderRouter } from '~/modules/itinerary_builder/itineraryBuilder.router';
 import { default as seasonsRouter } from '~/modules/seasons/seasons.router';
 import { default as newslettersRouter } from '~/modules/newsletter/newsletter.router';
-
+import { default as featuredThingRouter } from '~/modules/featured_thing/featuredThing.router';
 
 import error from '~/middlewares/error';
 import { jwtSetup } from './middlewares/auth/jwtAuth';
@@ -87,6 +87,7 @@ server.use('/where-to-stay', whereToStayRouter);
 server.use('/itinerary-builder', itineraryBuilderRouter);
 server.use('/seasons', seasonsRouter);
 server.use('/newsletters', newslettersRouter);
+server.use('/featured-things', featuredThingRouter);
 
 server.use(error);
 

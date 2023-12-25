@@ -211,3 +211,14 @@ CREATE TABLE "Season"(
     from_date DATE NOT NULL,
     to_date DATE NOT NULL
 );
+
+CREATE TABLE "FeaturedThing"(
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    name VARCHAR(255),
+    description TEXT,
+    category VARCHAR(255),
+    place_id UUID,
+    CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
+);
