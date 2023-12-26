@@ -34,7 +34,7 @@ const updatePlace = z.object({
     longitude: z.number().optional(),
     latitude: z.number().optional(),
     social_links: z.record(z.string(), z.string()).optional()
-}).strict();
+});
 
 export {
     placeId,
