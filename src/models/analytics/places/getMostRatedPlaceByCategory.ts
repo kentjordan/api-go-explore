@@ -29,7 +29,8 @@ async function getMostRatedPlaceByCategory(next: NextFunction, limit: number = 5
             WHERE 
                 P.category= ${category} AND most_rated.avg_rating IS NOT NULL
             ORDER BY 
-                most_rated.avg_rating DESC`;
+                most_rated.avg_rating DESC
+            LIMIT ${limit}`;
 
         const withoutCount = await prismaClient.$queryRaw <IPlaceMostRatedByCategory[]>`
             SELECT 
@@ -47,7 +48,8 @@ async function getMostRatedPlaceByCategory(next: NextFunction, limit: number = 5
             WHERE 
                 P.category= ${category} AND most_rated.avg_rating IS NULL
             ORDER 
-                BY most_rated.avg_rating DESC`;
+                BY most_rated.avg_rating DESC
+            LIMIT ${limit}`;
 
         return [
             ...withCount,
