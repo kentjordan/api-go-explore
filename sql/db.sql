@@ -47,6 +47,8 @@ CREATE TABLE "Place"(
     province TEXT,
     city TEXT,
     barangay TEXT,
+    longitude DECIMAL,
+    latitude DECIMAL,
     season_id UUID DEFAULT NULL,
     CONSTRAINT fk_season_id
         FOREIGN KEY (season_id)

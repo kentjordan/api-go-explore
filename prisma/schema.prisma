@@ -82,6 +82,8 @@ model Place {
   city          String?
   barangay      String?
   season_id     String?         @db.Uuid
+  longitude     Decimal?        @db.Decimal
+  latitude      Decimal?        @db.Decimal
   FeaturedThing FeaturedThing[]
   Feedback      Feedback[]
   Itinerary     Itinerary[]
