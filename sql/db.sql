@@ -49,6 +49,7 @@ CREATE TABLE "Place"(
     barangay TEXT,
     longitude DECIMAL,
     latitude DECIMAL,
+    stepsToGetThere TEXT,
     season_id UUID DEFAULT NULL,
     CONSTRAINT fk_season_id
         FOREIGN KEY (season_id)

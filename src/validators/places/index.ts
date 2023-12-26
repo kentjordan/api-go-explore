@@ -19,8 +19,9 @@ const createPlace = z.object({
     barangay: z.string().optional(),
     longitude: z.number().optional(),
     latitude: z.number().optional(),
-    social_links: z.record(z.string(), z.string()).optional()
-}).strict();
+    social_links: z.record(z.string(), z.string()).optional(),
+    stepsToGetThere: z.string().optional()
+});
 
 const updatePlace = z.object({
     category: z.string().min(1).optional(),
@@ -33,7 +34,8 @@ const updatePlace = z.object({
     barangay: z.string().min(1).optional(),
     longitude: z.number().optional(),
     latitude: z.number().optional(),
-    social_links: z.record(z.string(), z.string()).optional()
+    social_links: z.record(z.string(), z.string()).optional(),
+    stepsToGetThere: z.string().optional()
 });
 
 export {
