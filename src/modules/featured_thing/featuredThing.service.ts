@@ -14,18 +14,18 @@ export default class FeatureThingsService {
 
     async getAllFeaturedThings() {
 
-        let featuredThings = await prismaClient.$queryRaw<Array<{ place_id: string }>>`
+        let featuredThings = await prismaClient.$queryRaw<Array<{ wheretogo_id: string }>>`
             SELECT *
             FROM "FeaturedThing"`;
 
         const x = await Promise.allSettled(featuredThings.map(async (e, i) => {
-            const featuredPlace = await prismaClient.$queryRaw<Array<{}>>`
+            const [featuredPlace] = await prismaClient.$queryRaw<Array<{}>>`
                 SELECT *
-                FROM "Place"
-                WHERE id = ${e.place_id}::UUID`;
+                FROM "WhereToGo"
+                WHERE id = ${e.wheretogo_id}::UUID`;
 
             return {
-                place: featuredPlace,
+                whereToGo: featuredPlace,
                 ...e
             }
         }));
@@ -39,7 +39,7 @@ export default class FeatureThingsService {
 
     async getFeaturedThingById(id: string) {
 
-        const [featuredThing] = await prismaClient.$queryRaw < Array<{ place_id: string }>>`
+        const [featuredThing] = await prismaClient.$queryRaw < Array<{ wheretogo_id: string }>>`
             SELECT *
             FROM "FeaturedThing"
             WHERE id = ${id}::UUID`;
@@ -48,11 +48,11 @@ export default class FeatureThingsService {
         if (featuredThing) {
             const [featuredPlace] = await prismaClient.$queryRaw<Array<{}>>`
             SELECT *
-            FROM "Place"
-            WHERE id = ${featuredThing.place_id}::UUID`;
+            FROM "WhereToGo"
+            WHERE id = ${featuredThing.wheretogo_id}::UUID`;
 
             return {
-                place: featuredPlace,
+                whereToGo: featuredPlace,
                 ...featuredThing
             }
         }

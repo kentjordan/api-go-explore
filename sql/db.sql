@@ -222,6 +222,6 @@ CREATE TABLE "FeaturedThing"(
     description TEXT,
     category VARCHAR(255),
     photos TEXT[],
-    place_id UUID,
-    CONSTRAINT fk_place_id FOREIGN KEY (place_id) REFERENCES "Place"(id)
+    whereToGo_id UUID,
+    CONSTRAINT fk_place_id FOREIGN KEY (whereToGo_id) REFERENCES "WhereToGo"(id)
 );
