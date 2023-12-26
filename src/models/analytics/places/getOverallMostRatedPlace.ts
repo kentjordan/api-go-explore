@@ -13,16 +13,46 @@ interface IPlaceMostRated {
 async function getOverallMostRatedPlace(next: NextFunction, limit: number = 5) {
     try {
 
-        return await prismaClient.$queryRaw <IPlaceMostRated[]>
-            `
-        SELECT fb.place_id, p.title, p.province, p.city, p.category, AVG(fb.rating) as avg_rating
-        FROM  "Feedback" as fb
-        JOIN "Place" as p
-        ON p.id = fb.place_id
-        GROUP BY fb.place_id, p.title,p.province, p.city,  p.category
-        ORDER BY avg_rating DESC
-        LIMIT ${limit};
-        `
+        const withCount = await prismaClient.$queryRaw <IPlaceMostRated[]>`
+            SELECT 
+                P.id AS place_id, P.title, P.category, P.province, P.city, ROUND(most_rated.avg_rating::NUMERIC, 2) AS avg_rating
+            FROM 
+                "Place" AS P
+            LEFT JOIN
+                (SELECT 
+                    place_id, AVG(rating) AS avg_rating
+                FROM
+                    "Feedback"
+                GROUP BY
+                    place_id) AS most_rated
+            ON P.id = most_rated.place_id
+            WHERE 
+                most_rated.avg_rating IS NOT NULL
+            ORDER BY 
+                most_rated.avg_rating DESC`;
+
+        const withoutCount = await prismaClient.$queryRaw <IPlaceMostRated[]>`
+            SELECT 
+                P.id AS place_id, P.title, P.category, P.province, P.city, ROUND(most_rated.avg_rating::NUMERIC, 2) AS avg_rating
+            FROM 
+                "Place" AS P
+            LEFT JOIN
+                (SELECT 
+                    place_id, AVG(rating) AS avg_rating
+                FROM
+                    "Feedback"
+                GROUP BY
+                    place_id) AS most_rated
+            ON P.id = most_rated.place_id
+            WHERE 
+                most_rated.avg_rating IS NULL
+            ORDER 
+                BY most_rated.avg_rating DESC`;
+
+        return [
+            ...withCount,
+            ...withoutCount
+        ]
     } catch (error: unknown) {
         next(error);
     }

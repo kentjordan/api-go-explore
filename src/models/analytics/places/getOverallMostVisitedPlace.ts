@@ -13,22 +13,51 @@ interface IPlaceOverallMostVisited {
 async function getOverallMostVisitedPlace(next: NextFunction, limit: number = 5) {
     try {
 
-        const overallMostVisitedPlace = await prismaClient.$queryRaw<Array<IPlaceOverallMostVisited>>
-            `
-            SELECT place_id, p.category, p.title, p.province, p.city, COUNT(place_id) AS visited_count
-            FROM "VisitedPlace" AS vp
-            INNER JOIN "Place" AS p ON vp.place_id = p.id
-            GROUP BY vp.place_id, p.id
-            ORDER BY visited_count DESC
-            LIMIT ${limit};
-            `;
+        const withCount = await prismaClient.$queryRaw <Array<IPlaceOverallMostVisited>>`
+                SELECT 
+                    P.id AS place_id, P.title, P.category, P.province, P.city, VP.visited_count
+                FROM 
+                    "Place" AS P
+                LEFT JOIN
+                    (SELECT 
+                            place_id, COUNT(place_id) AS visited_count
+                    FROM 
+                        "VisitedPlace"
+                    GROUP BY 
+                        place_id) AS VP
+                    ON 
+                        P.id = VP.place_id
+                WHERE
+                    VP.visited_count IS NOT NULL
+                ORDER
+                     BY VP.visited_count DESC
+                LIMIT ${limit}`;
 
-        return overallMostVisitedPlace.map((e) => {
-            return {
-                ...e,
-                visited_count: parseInt(`${e.visited_count}`)
-            }
-        });
+        const withoutCount = await prismaClient.$queryRaw <Array<IPlaceOverallMostVisited>>`
+                SELECT 
+                    P.id AS place_id, P.title, P.category, P.province, P.city, VP.visited_count
+                FROM 
+                    "Place" AS P
+                LEFT JOIN
+                    (SELECT 
+                            place_id, COUNT(place_id) AS visited_count
+                    FROM 
+                        "VisitedPlace"
+                    GROUP 
+                        BY place_id) AS VP
+                    ON 
+                        P.id = VP.place_id
+                WHERE
+                    VP.visited_count IS NULL
+                ORDER
+                     BY VP.visited_count ASC
+                LIMIT ${limit}`;
+
+        return [
+            ...withCount,
+            ...withoutCount
+        ]
+
 
     } catch (error: unknown) {
         next(error);
