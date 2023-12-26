@@ -6,6 +6,6 @@ export const createFeaturedThingScheme = z.object({
     category: z.string().min(1),
     place_id: z.string().uuid(),
     photos: z.array(z.string())
-});
+}).strict();
 
 export type ICreateFeaturedThingDto = z.infer<typeof createFeaturedThingScheme>;

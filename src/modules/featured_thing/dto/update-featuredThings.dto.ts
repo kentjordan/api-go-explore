@@ -6,6 +6,6 @@ export const updateFeaturedThingScheme = z.object({
     category: z.string().min(1).optional(),
     place_id: z.string().uuid().optional(),
     photos: z.array(z.string()).optional()
-});
+}).strict();
 
 export type IUpdateFeaturedThingDto = z.infer<typeof updateFeaturedThingScheme>;
