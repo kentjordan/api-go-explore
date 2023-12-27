@@ -12,7 +12,7 @@ type IFeedbackReplies = Array<{
 const getFeedbackReplies = async (feedback_id: string): Promise<IFeedbackReplies> => {
 
     return await global.prismaClient.$queryRaw`
-        SELECT R.created_at, R.updated_at, U.first_name, U.last_name, U.profile_photo, U.current_city, U.current_province, R.reply_comment
+        SELECT R.created_at, R.updated_at, U.first_name, U.last_name, U.gender, U.profile_photo, U.current_city, U.current_province, R.reply_comment
         FROM "User" AS U
         INNER JOIN 
             (SELECT * FROM "ReplyComment" 
