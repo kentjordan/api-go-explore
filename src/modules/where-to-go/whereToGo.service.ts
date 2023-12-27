@@ -60,7 +60,7 @@ const updateWhereToGoById = async (req: IRequestCustomParams<IWhereToGoIDInput>,
     const input = ExtractReqBody<IWhereToGoUpdateInput>(req);
     const { whereToGo_id } = ExtractReqParams<IWhereToGoIDInput>(req);
 
-    const updatedWhereToGo = await WhereToGoModels.updateWhereToGoById({ ...input, whereToGo_id }, next);
+    const updatedWhereToGo = await WhereToGoModels.updateWhereToGoById({ ...input }, whereToGo_id, next);
 
     if (updatedWhereToGo) {
         res.status(200).json({

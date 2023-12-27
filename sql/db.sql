@@ -187,7 +187,8 @@ CREATE TABLE "WhereToGo"(
     updated_at TIMESTAMP,
     images TEXT[],
     title TEXT,
-    description TEXT
+    description TEXT,
+    hotlines JSON
 );
 
 CREATE TABLE "ReplyComment"(

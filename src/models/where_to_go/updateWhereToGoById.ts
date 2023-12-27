@@ -1,16 +1,14 @@
 import { NextFunction } from "express";
 import { IWhereToGoIDInput, IWhereToGoUpdateInput } from "~/@types/modules/where_to_go";
 
-const updateWhereToGoById = async (input: IWhereToGoUpdateInput & IWhereToGoIDInput, next: NextFunction) => {
+const updateWhereToGoById = async (input: IWhereToGoUpdateInput, whereToGo_id: string, next: NextFunction) => {
     try {
         return await prismaClient.whereToGo.update({
             where: {
-                id: input.whereToGo_id
+                id: whereToGo_id
             },
             data: {
-                description: input.description,
-                images: input.images,
-                title: input.title,
+                ...input,
                 updated_at: new Date().toISOString()
             }
         });
