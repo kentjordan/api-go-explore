@@ -53,7 +53,6 @@ router.post('/:feedback_id/replies',
 );
 
 router.get('/:feedback_id/replies',
-    jwtAuth,
     getFeedbackReplies
 );
 
