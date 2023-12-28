@@ -2,9 +2,6 @@ import { NextFunction } from "express";
 
 async function deleteUserById(id: string, next: NextFunction) {
 
-    console.log(id);
-
-
     try {
 
         await prismaClient.itineraryBuilder.deleteMany({
@@ -19,6 +16,7 @@ async function deleteUserById(id: string, next: NextFunction) {
             where: { user_id: id }
         });
 
+        // Delete 
         await prismaClient.$queryRaw`
         DELETE FROM 
             "ReplyComment"
@@ -27,6 +25,12 @@ async function deleteUserById(id: string, next: NextFunction) {
                         FROM "Feedback"
                         WHERE user_id = ${id}::UUID);
         `;
+
+        await prismaClient.replyComment.deleteMany({
+            where: {
+                user_id: id
+            }
+        });
 
         await prismaClient.feedback.deleteMany({
             where: { user_id: id }
